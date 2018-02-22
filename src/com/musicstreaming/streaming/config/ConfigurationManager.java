@@ -5,6 +5,12 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * En lugar de como clase utilidad, se ha implementado como Singleton 
+ * por si es preciso en el futuro para diversas estrategias de 
+ * configuración (JNDI, XML, Spring...),
+ * o para fragmentar configuracion, etc. etc.  
+ */
 public final class ConfigurationManager {
 
     private static final String SERVICE_CONFIGURATION_FILE =
@@ -49,6 +55,11 @@ public final class ConfigurationManager {
     private ConfigurationManager() {    	
     };
 
+    /**
+     * Obtiene el valor de un parámetro de configuración.
+     * @param name Nombre del parámetro.
+     * @return Valor del parámetor o null si no se ha encontrado.
+     */
     public String getParameter(String name) {
         String value = (String) parameters.get(name);       
         return value;
