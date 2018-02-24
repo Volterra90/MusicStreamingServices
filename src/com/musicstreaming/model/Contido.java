@@ -10,6 +10,7 @@ public abstract class Contido {
 	private String tipo = null;
 	private Date duracion = null;
 	private Long codAutor = null;
+	private Long codEstilo = null;
 	
 	//Getters & Setters
 	public Long getCodContido() {
@@ -42,7 +43,12 @@ public abstract class Contido {
 	public void setCodAutor(Long codAutor) {
 		this.codAutor = codAutor;
 	}
-	
+	public Long getCodEstilo() {
+		return codEstilo;
+	}
+	public void setCodEstilo(Long codEstilo) {
+		this.codEstilo = codEstilo;
+	}
 	
 
 }

@@ -2,7 +2,7 @@ package com.musicstreaming.model;
 
 import java.util.Date;
 
-public class Usuario extends Autor {
+public class Usuario{
 	
 	//Atributos
 	private Date fechaSubscricion = null;
@@ -13,6 +13,12 @@ public class Usuario extends Autor {
 	private String nome = null;
 	private String apelidos = null;
 	private Long codDireccion = null;
+	
+	private Direccion direccion = null;
+	
+	public Usuario() {
+		direccion = new Direccion();
+	}
 	
 	//Getters & Setters
 	public Date getFechaSubscricion() {
@@ -63,7 +69,14 @@ public class Usuario extends Autor {
 	public void setCodDireccion(Long codDireccion) {
 		this.codDireccion = codDireccion;
 	}
-	
+
+	public Direccion getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
+	}
 	
 
 }
