@@ -5,7 +5,7 @@ public class Provincia {
 	//Atributos
 	private Long codProvincia = null;
 	private String provincia = null;
-	private Long codPais = null;
+	private String codPais = null;
 	
 	//Getters & Setters
 	public Long getCodProvincia() {
@@ -20,10 +20,10 @@ public class Provincia {
 	public void setProvincia(String provincia) {
 		this.provincia = provincia;
 	}
-	public Long getCodPais() {
+	public String getCodPais() {
 		return codPais;
 	}
-	public void setCodPais(Long codPais) {
+	public void setCodPais(String codPais) {
 		this.codPais = codPais;
 	}
 	
