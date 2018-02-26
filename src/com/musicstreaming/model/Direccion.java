@@ -6,6 +6,7 @@ public class Direccion {
 	private Long codDireccion = null;
 	private String direccion = null;
 	private Long codProvincia = null;
+	private Long codUsuario = null;
 	
 	//Getters & Setters
 	public Long getCodDireccion() {
@@ -25,6 +26,12 @@ public class Direccion {
 	}
 	public void setCodProvincia(Long codProvincia) {
 		this.codProvincia = codProvincia;
+	}
+	public Long getCodUsuario() {
+		return codUsuario;
+	}
+	public void setCodUsuario(Long codUsuario) {
+		this.codUsuario = codUsuario;
 	}
 	
 	

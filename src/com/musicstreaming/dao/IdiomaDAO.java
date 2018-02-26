@@ -11,9 +11,8 @@ public interface IdiomaDAO {
 	
 	public Idioma findById (Connection connection, String id)
 			throws InstanceNotFoundException, DataException;
-	
-	public List<Idioma> findAll(Connection connection, String idiomaId,
-		 	int startIndex, int count) 
-	throws DataException;
+
+	public List<Idioma> findAll (Connection connection)
+			throws DataException;
 
 }
