@@ -27,7 +27,7 @@ public class PaisDAOImpl implements PaisDAO {
 
 			// Create "preparedStatement"       
 			String queryString = 
-					"SELECT p.COD_PAIS, p.PAIS " + 
+					"SELECT p.COD_PAIS, p.PAIS, p.COD_IDIOMA " + 
 					"FROM PAIS_IDIOMA p  " +
 					"WHERE COD_IDIOMA LIKE ? "+
 					"ORDER BY p.PAIS DESC ";
@@ -64,11 +64,13 @@ public class PaisDAOImpl implements PaisDAO {
 
 				int i = 1;
 				String idPais = resultSet.getString(i++);	                
-				String pais = resultSet.getString(i++);	                             
+				String pais = resultSet.getString(i++);	
+				String idIdioma = resultSet.getString(i++);
 		
 				Pais p = new Pais();		
 				p.setCodPais(idPais);;
 				p.setPais(pais);
+				p.setCodPais(idIdioma);
 				
 				return p;
 			}

@@ -18,7 +18,7 @@ public class ProvinciaDAOImpl implements ProvinciaDAO {
 public ProvinciaDAOImpl() {}
 	
 	@Override
-	public List<Provincia> findByPaisIdioma(Connection connection, String idPais, String idIdioma)
+	public List<Provincia> findByPaisIdioma(Connection connection, Pais pais)
 					throws DataException {
 
 		PreparedStatement preparedStatement = null;
@@ -32,15 +32,16 @@ public ProvinciaDAOImpl() {}
 					"FROM PROVINCIA_IDIOMA pi  " +
 					"INNER JOIN PROVINCIA p "+
 						"ON p.COD_PROVINCIA = pi.COD_PROVINCIA " +
-					" WHERE p.COD_PAIS = ? AND pi.COD_IDIOMA = ?";
+					" WHERE p.COD_PAIS LIKE ? AND pi.COD_IDIOMA LIKE ?" +
+						"ORDER BY pi.PROVINCIA DESC";
 	
 
 			preparedStatement = connection.prepareStatement(queryString,
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
 			int i = 1;                
-			preparedStatement.setString(i++, idPais);
-			preparedStatement.setString(i++, idIdioma);
+			preparedStatement.setString(i++, pais.getCodPais());
+			preparedStatement.setString(i++, pais.getCodIdioma());
 
 			resultSet = preparedStatement.executeQuery();
 
@@ -50,7 +51,6 @@ public ProvinciaDAOImpl() {}
 
 			while (resultSet.next()) {
 				p = loadNext (connection,resultSet);
-				p.setCodPais(idPais);
 				results.add(p);
 			}
 			return results;
@@ -68,7 +68,8 @@ public ProvinciaDAOImpl() {}
 
 				int i = 1;
 				Long idProvincia = resultSet.getLong(i++);	                
-				String provincia = resultSet.getString(i++);	                             
+				String provincia = resultSet.getString(i++);
+		
 		
 				Provincia p = new Provincia();		
 				p.setCodProvincia(idProvincia);
