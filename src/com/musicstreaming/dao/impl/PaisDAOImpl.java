@@ -29,8 +29,8 @@ public class PaisDAOImpl implements PaisDAO {
 			String queryString = 
 					"SELECT p.COD_PAIS, p.PAIS, p.COD_IDIOMA " + 
 					"FROM PAIS_IDIOMA p  " +
-					"WHERE COD_IDIOMA LIKE ? "+
-					"ORDER BY p.PAIS DESC ";
+					"WHERE COD_IDIOMA = ? "+
+					"ORDER BY p.PAIS ASC ";
 	
 
 			preparedStatement = connection.prepareStatement(queryString,

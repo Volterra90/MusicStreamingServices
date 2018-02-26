@@ -5,16 +5,120 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.musicstreaming.dao.DireccionDAO;
 import com.musicstreaming.model.Direccion;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.exceptions.DuplicateInstanceException;
+import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
 
 public class DireccionDAOImpl implements DireccionDAO {
 	
 	public DireccionDAOImpl() {}
+	
+	@Override
+	public Direccion findById (Connection connection, Long id)
+		throws InstanceNotFoundException, DataException{
+		
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {          
+			String queryString = 
+					"SELECT d.COD_DIRECCION, d.DIRECCION, d.COD_PROVINCIA, d.COD_USUARIO " 
+							+ "FROM Direccion d  " +
+							"WHERE d.COD_DIRECCION = ? ";
+			
+			preparedStatement = connection.prepareStatement(queryString,
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			int i = 1;                
+			preparedStatement.setLong(i++, id);
+
+			resultSet = preparedStatement.executeQuery();
+
+			Direccion d = null;
+
+			if (resultSet.next()) {
+				d = loadNext(connection, resultSet);				
+			} else {
+				throw new InstanceNotFoundException("Direccion with id " + id + 
+						"not found", Direccion.class.getName());
+			}
+
+			return d;
+
+		} catch (SQLException e) {
+			throw new DataException(e);
+		} finally {            
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		}  
+		
+	}
+	
+	@Override
+	public List<Direccion> findByIdUsuario (Connection connection, Long id)
+			throws DataException{
+		
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {          
+			String queryString = 
+					"SELECT d.COD_DIRECCION, d.DIRECCION, d.COD_PROVINCIA, d.COD_USUARIO " 
+							+ "FROM Direccion d  " +
+							"WHERE d.COD_USUARIO = ? ";
+			
+			preparedStatement = connection.prepareStatement(queryString,
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			int i = 1;                
+			preparedStatement.setLong(i++, id);
+
+			resultSet = preparedStatement.executeQuery();
+
+
+			List<Direccion> results = new ArrayList<Direccion>();                        
+			Direccion d = null;
+
+			while (resultSet.next()) {
+				d = loadNext (connection,resultSet);
+				results.add(d);
+			}
+
+			return results;
+
+		} catch (SQLException e) {
+			throw new DataException(e);
+		} finally {            
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		}  
+		
+	}
+	
+	private Direccion loadNext(Connection connection, ResultSet resultSet)
+			throws SQLException, DataException {
+
+				int i = 1;
+				Long direccionId = resultSet.getLong(i++);	                
+				String direccion = resultSet.getString(i++);	                
+				Long provinciaId = resultSet.getLong(i++);
+				Long codUsuario = resultSet.getLong(i++);
+				
+		
+				Direccion d = new Direccion();		
+				d.setCodDireccion(direccionId);
+				d.setCodProvincia(provinciaId);
+				d.setCodUsuario(codUsuario);
+				d.setDireccion(direccion);
+				
+				return d;
+			}
 	
 	@Override
 	public Direccion create(Connection connection, Direccion d) 
@@ -60,6 +164,79 @@ public class DireccionDAOImpl implements DireccionDAO {
 		
 		
 	}
+	
+	@Override
+	public void update (Connection connection, Direccion d)
+			throws InstanceNotFoundException, DataException{
+		PreparedStatement preparedStatement = null;
+		try {
+			
+			String queryString = 
+					"UPDATE DIRECCION " +
+					"SET DIRECCION = ?, COD_PROVINCIA = ?, COD_USUARIO = ? " +
+					"WHERE COD_DIRECCION = ? ";
+
+			preparedStatement = connection.prepareStatement(queryString);
+
+			int i = 1;
+			preparedStatement.setString(i++, d.getDireccion());
+			preparedStatement.setLong(i++, d.getCodProvincia());
+			preparedStatement.setLong(i++, d.getCodUsuario());
+			preparedStatement.setLong(i++,d.getCodDireccion());
+			
+			
+			
+
+			int updatedRows = preparedStatement.executeUpdate();
+
+			if (updatedRows == 0) {
+				throw new InstanceNotFoundException(d.getCodDireccion(), Direccion.class.getName());
+			}
+
+			if (updatedRows > 1) {
+				throw new SQLException("Duplicate row for id = '" + 
+						d.getCodDireccion() + "' in table 'Direccion'");
+			}     
+			
+
+		} catch (SQLException e) {
+			throw new DataException(e);    
+		} finally {
+			JDBCUtils.closeStatement(preparedStatement);
+		}              		
+		
+	}
+	
+	@Override
+	public long delete(Connection connection, Long id)
+			throws InstanceNotFoundException, DataException{
+		PreparedStatement preparedStatement = null;
+
+		try {
+			
+			String queryString =	
+					  "DELETE FROM DIRECCION " 
+					+ "WHERE COD_DIRECCION = ? ";
+			
+			preparedStatement = connection.prepareStatement(queryString);
+
+			int i = 1;
+			preparedStatement.setLong(i++, id);
+
+			int removedRows = preparedStatement.executeUpdate();
+
+			if (removedRows == 0) {
+				throw new InstanceNotFoundException(id,Direccion.class.getName());
+			} 
+			return removedRows;
+
+		} catch (SQLException e) {
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeStatement(preparedStatement);
+		}
+	}
+		
 
 	
 }

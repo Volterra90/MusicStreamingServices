@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.musicstreaming.dao.ProvinciaDAO;
-import com.musicstreaming.model.Pais;
 import com.musicstreaming.model.Provincia;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
@@ -18,7 +17,7 @@ public class ProvinciaDAOImpl implements ProvinciaDAO {
 public ProvinciaDAOImpl() {}
 	
 	@Override
-	public List<Provincia> findByPaisIdioma(Connection connection, Pais pais)
+	public List<Provincia> findByPaisIdioma(Connection connection, String codPais, String codIdioma)
 					throws DataException {
 
 		PreparedStatement preparedStatement = null;
@@ -32,16 +31,16 @@ public ProvinciaDAOImpl() {}
 					"FROM PROVINCIA_IDIOMA pi  " +
 					"INNER JOIN PROVINCIA p "+
 						"ON p.COD_PROVINCIA = pi.COD_PROVINCIA " +
-					" WHERE p.COD_PAIS LIKE ? AND pi.COD_IDIOMA LIKE ?" +
-						"ORDER BY pi.PROVINCIA DESC";
+					" WHERE p.COD_PAIS = ? AND pi.COD_IDIOMA = ?" +
+						"ORDER BY pi.PROVINCIA ASC";
 	
 
 			preparedStatement = connection.prepareStatement(queryString,
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
 			int i = 1;                
-			preparedStatement.setString(i++, pais.getCodPais());
-			preparedStatement.setString(i++, pais.getCodIdioma());
+			preparedStatement.setString(i++, codPais);
+			preparedStatement.setString(i++, codIdioma);
 
 			resultSet = preparedStatement.executeQuery();
 

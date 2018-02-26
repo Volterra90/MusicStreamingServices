@@ -5,7 +5,6 @@ public class Pais {
 	//Atributos
 	private String codPais = null;
 	private String pais = null;
-	private String codIdioma = null;
 	
 	//Getters & Setters
 	public String getCodPais() {
@@ -20,14 +19,6 @@ public class Pais {
 	public void setPais(String pais) {
 		this.pais = pais;
 	}
-	
-	public String getCodIdioma() {
-		return codIdioma;
-	}
-	public void setCodIdioma(String codIdioma) {
-		this.codIdioma = codIdioma;
-	}
-
-	
+		
 	
 }
