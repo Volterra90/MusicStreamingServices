@@ -5,6 +5,7 @@ import java.util.Date;
 public class Usuario{
 	
 	//Atributos
+	private Long idUsuario = null;
 	private Date fechaSubscricion = null;
 	private String xenero = null;
 	private Date fechaNacemento = null;
@@ -12,7 +13,7 @@ public class Usuario{
 	private String contrasinal = null;
 	private String nome = null;
 	private String apelidos = null;
-	private Long codDireccion = null;
+	private String nick = null;
 	
 	private Direccion direccion = null;
 	
@@ -21,6 +22,12 @@ public class Usuario{
 	}
 	
 	//Getters & Setters
+	public Long getIdUsuario() {
+		return idUsuario;
+	}
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
+	}
 	public Date getFechaSubscricion() {
 		return fechaSubscricion;
 	}
@@ -63,12 +70,6 @@ public class Usuario{
 	public void setApelidos(String apelidos) {
 		this.apelidos = apelidos;
 	}
-	public Long getCodDireccion() {
-		return codDireccion;
-	}
-	public void setCodDireccion(Long codDireccion) {
-		this.codDireccion = codDireccion;
-	}
 
 	public Direccion getDireccion() {
 		return direccion;
@@ -76,6 +77,14 @@ public class Usuario{
 
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
+	}
+
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
 	}
 	
 

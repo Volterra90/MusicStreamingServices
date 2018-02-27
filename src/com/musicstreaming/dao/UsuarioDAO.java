@@ -14,5 +14,5 @@ public interface UsuarioDAO {
 	
 	public Usuario create(Connection connection, Usuario u) 
      		throws DuplicateInstanceException, DataException;
-         
+	
 }
