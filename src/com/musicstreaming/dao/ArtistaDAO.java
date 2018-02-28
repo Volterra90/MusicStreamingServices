@@ -11,6 +11,6 @@ public interface ArtistaDAO {
 	public Artista findById(Connection connection, Long id)
 		throws InstanceNotFoundException, DataException;
 	
-	public 
+	
 
 }
