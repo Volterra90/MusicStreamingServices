@@ -1,12 +1,12 @@
-package com.musicstreaming.services.impl;
+package com.musicstreaming.streaming.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.musicstreaming.model.Cancion;
-import com.musicstreaming.model.Contido;
-import com.musicstreaming.services.ContidoCriteria;
-import com.musicstreaming.services.ContidoService;
+import com.musicstreaming.streaming.model.Cancion;
+import com.musicstreaming.streaming.model.Contido;
+import com.musicstreaming.streaming.service.ContidoCriteria;
+import com.musicstreaming.streaming.service.ContidoService;
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
 

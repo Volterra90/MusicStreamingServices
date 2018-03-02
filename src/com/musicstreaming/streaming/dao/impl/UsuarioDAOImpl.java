@@ -8,8 +8,8 @@ import java.sql.Statement;
 import java.util.Date;
 
 import com.musicstreaming.streaming.dao.UsuarioDAO;
-import com.musicstreaming.model.Direccion;
-import com.musicstreaming.model.Usuario;
+import com.musicstreaming.streaming.model.Direccion;
+import com.musicstreaming.streaming.model.Usuario;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.exceptions.DuplicateInstanceException;

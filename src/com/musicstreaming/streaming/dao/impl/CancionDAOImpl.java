@@ -4,7 +4,7 @@ import java.sql.Connection;
 
 import com.musicstreaming.streaming.dao.CancionDAO;
 import com.musicstreaming.streaming.dao.Resultset;
-import com.musicstreaming.model.Cancion;
+import com.musicstreaming.streaming.model.Cancion;
 
 public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 

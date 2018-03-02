@@ -3,7 +3,7 @@ package com.musicstreaming.streaming.dao;
 import java.sql.Connection;
 import java.util.List;
 
-import com.musicstreaming.model.Direccion;
+import com.musicstreaming.streaming.model.Direccion;
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.exceptions.DuplicateInstanceException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.musicstreaming.streaming.dao.PaisDAO;
-import com.musicstreaming.model.Pais;
+import com.musicstreaming.streaming.model.Pais;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
 

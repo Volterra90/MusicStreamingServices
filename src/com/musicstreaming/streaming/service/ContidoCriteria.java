@@ -1,6 +1,6 @@
-package com.musicstreaming.services;
+package com.musicstreaming.streaming.service;
 
-import com.musicstreaming.model.Contido;
+import com.musicstreaming.streaming.model.Contido;
 
 public class ContidoCriteria extends Contido {
 		

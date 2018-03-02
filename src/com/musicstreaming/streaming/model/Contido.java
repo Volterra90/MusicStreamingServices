@@ -1,4 +1,4 @@
-package com.musicstreaming.model;
+package com.musicstreaming.streaming.model;
 
 public abstract class Contido {
 	

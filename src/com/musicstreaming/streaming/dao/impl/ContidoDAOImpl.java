@@ -8,8 +8,8 @@ import java.util.List;
 
 import com.musicstreaming.streaming.dao.CancionDAO;
 import com.musicstreaming.streaming.dao.ContidoDAO;
-import com.musicstreaming.model.Contido;
-import com.musicstreaming.services.ContidoCriteria;
+import com.musicstreaming.streaming.model.Contido;
+import com.musicstreaming.streaming.service.ContidoCriteria;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;

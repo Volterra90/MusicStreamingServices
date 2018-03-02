@@ -1,6 +1,6 @@
-package com.musicstreaming.services;
+package com.musicstreaming.streaming.service;
 
-import com.musicstreaming.model.Usuario;
+import com.musicstreaming.streaming.model.Usuario;
 
 public class UsuarioCriteria extends Usuario{
 	

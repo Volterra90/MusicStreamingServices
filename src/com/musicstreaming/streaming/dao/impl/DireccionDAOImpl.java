@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.musicstreaming.streaming.dao.DireccionDAO;
-import com.musicstreaming.model.Direccion;
+import com.musicstreaming.streaming.model.Direccion;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.exceptions.DuplicateInstanceException;
