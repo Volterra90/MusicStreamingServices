@@ -1,4 +1,4 @@
-package com.musicstreaming.dao.impl;
+package com.musicstreaming.streaming.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.musicstreaming.dao.DireccionDAO;
+import com.musicstreaming.streaming.dao.DireccionDAO;
 import com.musicstreaming.model.Direccion;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;

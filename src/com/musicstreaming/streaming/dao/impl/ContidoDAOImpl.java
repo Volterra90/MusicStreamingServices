@@ -1,4 +1,4 @@
-package com.musicstreaming.dao.impl;
+package com.musicstreaming.streaming.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.musicstreaming.dao.CancionDAO;
-import com.musicstreaming.dao.ContidoDAO;
+import com.musicstreaming.streaming.dao.CancionDAO;
+import com.musicstreaming.streaming.dao.ContidoDAO;
 import com.musicstreaming.model.Contido;
 import com.musicstreaming.services.ContidoCriteria;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;

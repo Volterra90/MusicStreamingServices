@@ -1,4 +1,4 @@
-package com.musicstreaming.dao.impl;
+package com.musicstreaming.streaming.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
-import com.musicstreaming.dao.UsuarioDAO;
+import com.musicstreaming.streaming.dao.UsuarioDAO;
 import com.musicstreaming.model.Direccion;
 import com.musicstreaming.model.Usuario;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;

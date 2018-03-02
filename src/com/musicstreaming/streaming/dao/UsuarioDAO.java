@@ -1,4 +1,4 @@
-package com.musicstreaming.dao;
+package com.musicstreaming.streaming.dao;
 
 import java.sql.Connection;
 

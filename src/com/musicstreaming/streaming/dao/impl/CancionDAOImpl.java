@@ -1,9 +1,9 @@
-package com.musicstreaming.dao.impl;
+package com.musicstreaming.streaming.dao.impl;
 
 import java.sql.Connection;
 
-import com.musicstreaming.dao.CancionDAO;
-import com.musicstreaming.dao.Resultset;
+import com.musicstreaming.streaming.dao.CancionDAO;
+import com.musicstreaming.streaming.dao.Resultset;
 import com.musicstreaming.model.Cancion;
 
 public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
