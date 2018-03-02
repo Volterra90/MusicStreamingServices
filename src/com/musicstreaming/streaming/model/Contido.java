@@ -1,14 +1,12 @@
 package com.musicstreaming.model;
 
-import java.util.Date;
-
 public abstract class Contido {
 	
 	//Atributos
 	private Long codContido = null;
 	private String nome = null;
-	private String tipo = null;
-	private Date duracion = null;
+	private char tipo = null;
+	private Long duracion = null;
 	private Long codAutor = null;
 	private Long codEstilo = null;
 	
@@ -25,16 +23,16 @@ public abstract class Contido {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getTipo() {
+	public char getTipo() {
 		return tipo;
 	}
-	public void setTipo(String tipo) {
+	public void setTipo(char tipo) {
 		this.tipo = tipo;
 	}
-	public Date getDuracion() {
+	public Long getDuracion() {
 		return duracion;
 	}
-	public void setDuracion(Date duracion) {
+	public void setDuracion(Long duracion) {
 		this.duracion = duracion;
 	}
 	public Long getCodAutor() {

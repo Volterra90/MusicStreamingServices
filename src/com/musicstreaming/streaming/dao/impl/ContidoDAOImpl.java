@@ -9,7 +9,7 @@ import java.util.List;
 import com.musicstreaming.dao.CancionDAO;
 import com.musicstreaming.dao.ContidoDAO;
 import com.musicstreaming.model.Contido;
-import com.musicstreaming.model.Direccion;
+import com.musicstreaming.services.ContidoCriteria;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
@@ -52,7 +52,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 			Contido c = null;
 			
 			switch (tipo) {
-				case "c": c = cancionDAO.findById(connection, id);
+				case 'c': c = cancionDAO.findById(connection, id);
 				case "a": c = albumDAO.findById(connection, id);
 				case "p": c = playlistDAO.findById(connection, id);
 			}
@@ -77,7 +77,9 @@ public class ContidoDAOImpl implements ContidoDAO {
 					
 	}
 	
-	public List<Conteido> findByCriteria(Connection connection, int startIndex, int pageSize, String [] tipos., .... ... ) {
+	public List<Contido> findByCriteria(Connection connection, int startIndex, int pageSize, ContidoCriteria cc) {
+		
+		
 		
 		select id // solo recupero 
 		from contenido // cancion album playlist
