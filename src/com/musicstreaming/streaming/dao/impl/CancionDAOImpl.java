@@ -8,7 +8,7 @@ import com.musicstreaming.streaming.model.Cancion;
 
 public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 
-	public Cancion findById(Connection c, long id) throws ... {
+	public Cancion findById(Connection c, Long id) throws ... {
 
 		sql = Select id, nombre, duracion, ..,  // atriobuos comunes y propios
 				from contenido cd, cancion cn 

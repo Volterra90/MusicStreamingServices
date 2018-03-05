@@ -1,14 +1,15 @@
 package com.musicstreaming.streaming.model;
 
-public abstract class Contido {
+public class Contido {
 	
 	//Atributos
 	private Long codContido = null;
 	private String nome = null;
-	private char tipo = null;
-	private Long duracion = null;
-	private Long codAutor = null;
+	private Character tipo = null;
+	private Long codArtista = null;
 	private Long codEstilo = null;
+	
+	public Contido() {}
 	
 	//Getters & Setters
 	public Long getCodContido() {
@@ -29,17 +30,11 @@ public abstract class Contido {
 	public void setTipo(char tipo) {
 		this.tipo = tipo;
 	}
-	public Long getDuracion() {
-		return duracion;
+	public Long getCodArtista() {
+		return codArtista;
 	}
-	public void setDuracion(Long duracion) {
-		this.duracion = duracion;
-	}
-	public Long getCodAutor() {
-		return codAutor;
-	}
-	public void setCodAutor(Long codAutor) {
-		this.codAutor = codAutor;
+	public void setCodArtista(Long codArtista) {
+		this.codArtista = codArtista;
 	}
 	public Long getCodEstilo() {
 		return codEstilo;

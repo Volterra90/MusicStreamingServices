@@ -4,16 +4,16 @@ import com.musicstreaming.streaming.model.Contido;
 
 public class ContidoCriteria extends Contido {
 		
-	private String [] tipos = null;
+	private Character [] tipos = null;
 	
 	public ContidoCriteria() {
 	}
 
-	public String[] getTipos() {
+	public Character[] getTipos() {
 		return tipos;
 	}
 
-	public void setTipos(String[] tipos) {
+	public void setTipos(Character[] tipos) {
 		this.tipos = tipos;
 	}
 	
