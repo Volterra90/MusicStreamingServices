@@ -8,6 +8,7 @@ public class Contido {
 	private Character tipo = null;
 	private Long codArtista = null;
 	private Long codEstilo = null;
+	private Integer media = null;
 	
 	public Contido() {}
 	
@@ -41,6 +42,14 @@ public class Contido {
 	}
 	public void setCodEstilo(Long codEstilo) {
 		this.codEstilo = codEstilo;
+	}
+
+	public Integer getMedia() {
+		return media;
+	}
+
+	public void setMedia(Integer media) {
+		this.media = media;
 	}
 	
 
