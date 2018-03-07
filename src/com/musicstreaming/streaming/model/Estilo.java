@@ -6,6 +6,7 @@ public class Estilo {
 	private Long codestilo = null;
 	private String estilo = null;
 	
+	public Estilo() {}
 	//Getters & Setters
 	public Long getCodestilo() {
 		return codestilo;

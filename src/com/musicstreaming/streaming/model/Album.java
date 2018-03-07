@@ -8,6 +8,8 @@ public class Album extends GrupoCancions {
 	private Date fechaPublicacion = null;
 	private String nomeDiscografica = null;
 	
+	public Album() {}
+	
 	//Getters & Setters
 	public Date getFechaPublicacion() {
 		return fechaPublicacion;

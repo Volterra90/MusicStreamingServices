@@ -7,7 +7,7 @@ public class Provincia {
 	private String provincia = null;
 	private String codPais = null;
 	
-	
+	public Provincia() {}
 	//Getters & Setters
 	public Long getCodProvincia() {
 		return codProvincia;

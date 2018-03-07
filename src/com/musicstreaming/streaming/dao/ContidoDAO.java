@@ -13,7 +13,7 @@ public interface ContidoDAO {
 	public Contido findById(Connection c, Long id)
 		throws InstanceNotFoundException, DataException;
 	
-	public List<Contido> findByCriteria (Connection connection, ContidoCriteria cc)
+	public List<Contido> findByCriteria (Connection connection, int startIndex, int count, ContidoCriteria cc)
 		throws DataException;
 	
 

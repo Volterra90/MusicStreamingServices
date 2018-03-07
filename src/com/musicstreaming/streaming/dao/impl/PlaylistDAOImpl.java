@@ -5,29 +5,29 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.musicstreaming.streaming.dao.CancionDAO;
+import com.musicstreaming.streaming.dao.PlaylistDAO;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
-import com.musicstreaming.streaming.model.Cancion;
 import com.musicstreaming.streaming.model.Direccion;
+import com.musicstreaming.streaming.model.Playlist;
 
-public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
+public class PlaylistDAOImpl extends ContidoDAOImpl implements PlaylistDAO {
 	
-	public CancionDAOImpl() {}
-
-	public Cancion findById(Connection connection, Long id) 
+	public PlaylistDAOImpl() {}
+	
+	public Playlist findById(Connection connection,Long id) 
 			throws InstanceNotFoundException, DataException{
-
+		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 
 		try {          
 			String queryString = 
-					"SELECT c.COD_CONTIDO, c.NOME, c.TIPO, c.COD_AUTOR, c.COD_ESTILO, c.COD_ARTISTA, ca.DURACION " 
+					"SELECT c.COD_CONTIDO, c.NOME, c.TIPO, c.COD_AUTOR, c.COD_ESTILO, c.COD_ARTISTA, a.COD_USUARIO " 
 							+ "FROM CONTIDO c"
-							+ "INNER JOIN cancion ca "
-							+ "ON c.COD_CANCION = c.COD_CONTIDO "
+							+ "INNER JOIN PLAYLIST p "
+							+ "ON c.COD_CONTIDO = p.COD_PLAYLIST "
 							+ "WHERE c.COD_CONTIDO = ? ";
 			
 			preparedStatement = connection.prepareStatement(queryString,
@@ -38,16 +38,16 @@ public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 
 			resultSet = preparedStatement.executeQuery();
 
-			Cancion c = null;
+			Playlist p = null;
 
 			if (resultSet.next()) {
-				c = loadNext(connection, resultSet);				
+				p = loadNext(connection, resultSet);				
 			} else {
-				throw new InstanceNotFoundException("Canción with id " + id + 
+				throw new InstanceNotFoundException("Album with id " + id + 
 						"not found", Direccion.class.getName());
 			}
 
-			return c;
+			return p;
 
 		} catch (SQLException e) {
 			throw new DataException(e);
@@ -55,23 +55,24 @@ public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
 		}
+		
 	}
-
 	
-	protected Cancion loadNext(Connection connection, ResultSet rs) 
+	protected Playlist loadNext(Connection connection, ResultSet rs) 
 			throws SQLException, DataException{
 			 
 		// Creo el tipo especifico
-		Cancion c = new Cancion();
+		Playlist p = new Playlist();
 		
 		// El DAO padre carga los atirbutos comunes
-		super.loadNext(connection, rs, c);
+		super.loadNext(connection, rs, p);
 		
 		// Y carga los suyos propios
-		Long duracion = rs.getLong(6);	
-		c.setDuracion(duracion);
+		Long codUsuario = rs.getLong(6);
+		
+		p.setCodUsuario(codUsuario);
 				
-		return c;
+		return p;
 	}
-
+	
 }

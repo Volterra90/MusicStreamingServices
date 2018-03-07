@@ -7,14 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.musicstreaming.streaming.dao.AlbumDAO;
 import com.musicstreaming.streaming.dao.CancionDAO;
 import com.musicstreaming.streaming.dao.ContidoDAO;
-import com.musicstreaming.streaming.model.Contido;
-import com.musicstreaming.streaming.service.ContidoCriteria;
-import com.sacra.ecommerce.dao.impl.Pedido;
+import com.musicstreaming.streaming.dao.PlaylistDAO;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
+import com.musicstreaming.streaming.model.Contido;
+import com.musicstreaming.streaming.service.ContidoCriteria;
 
 public class ContidoDAOImpl implements ContidoDAO {
 	
@@ -70,7 +71,8 @@ public class ContidoDAOImpl implements ContidoDAO {
 					
 	}
 	
-	public List<Contido> findByCriteria(Connection connection, int startIndex, int pageSize, ContidoCriteria cc) {
+	public List<Contido> findByCriteria(Connection connection, int startIndex, int count, ContidoCriteria cc)
+			throws InstanceNotFoundException, DataException{
 		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -113,7 +115,8 @@ public class ContidoDAOImpl implements ContidoDAO {
 
 			if ((startIndex >=1) && resultSet.absolute(startIndex)) {
 				do {
-					    	
+						c = findById(connection,resultSet.getLong(1));
+						results.add(c);
 				} while ((currentCount < count) && resultSet.next()) ;
 			}
 
@@ -127,18 +130,17 @@ public class ContidoDAOImpl implements ContidoDAO {
 		}
 		
 		
-		for (cada id) {
-			findById(connection,id)
-		}
+		
 	}
 	
 	private void addClause(StringBuilder queryString, boolean first, String clause) {
 		queryString.append(first?" WHERE ": " OR ").append(clause);
 	}
 		
-	protected void loadNext(Connection con, ResultSet rs, Contido c) {
+	protected void loadNext(Connection con, ResultSet rs, Contido c)
+		throws SQLException{
 		
-		int i;	
+		int i = 1;	
 		Long codContido = rs.getLong(i++);
 		String nome = rs.getString(i++);
 		Character tipo = rs.getString(i++).charAt(0);

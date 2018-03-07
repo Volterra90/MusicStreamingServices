@@ -6,6 +6,7 @@ public class Idioma {
 	private String idIdioma = null;
 	private String idioma = null;
 	
+	public Idioma() {}
 	//Getters & Setters
 	public String getIdIdioma() {
 		return idIdioma;

@@ -7,6 +7,7 @@ public class Artista{
 	//Atributos
 	private Date anoFormacion = null;
 	
+	public Artista() {}
 	//Getters & Setters
 	
 	public Date getAnoFormacion() {

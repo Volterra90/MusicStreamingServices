@@ -6,6 +6,8 @@ public class Pais {
 	private String codPais = null;
 	private String pais = null;
 	
+	public Pais() {}
+	
 	//Getters & Setters
 	public String getCodPais() {
 		return codPais;

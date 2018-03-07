@@ -8,6 +8,7 @@ public class Direccion {
 	private Long codProvincia = null;
 	private Long codUsuario = null;
 	
+	public Direccion () {}
 	//Getters & Setters
 	public Long getCodDireccion() {
 		return codDireccion;

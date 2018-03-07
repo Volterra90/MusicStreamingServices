@@ -4,19 +4,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
-import com.musicstreaming.streaming.dao.CancionDAO;
+import com.musicstreaming.streaming.dao.AlbumDAO;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
-import com.musicstreaming.streaming.model.Cancion;
+import com.musicstreaming.streaming.model.Album;
 import com.musicstreaming.streaming.model.Direccion;
 
-public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
+public class AlbumDAOImpl extends ContidoDAOImpl implements AlbumDAO {
 	
-	public CancionDAOImpl() {}
-
-	public Cancion findById(Connection connection, Long id) 
+	public AlbumDAOImpl() {}
+	
+	public Album findById(Connection connection, Long id) 
 			throws InstanceNotFoundException, DataException{
 
 		PreparedStatement preparedStatement = null;
@@ -24,10 +25,10 @@ public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 
 		try {          
 			String queryString = 
-					"SELECT c.COD_CONTIDO, c.NOME, c.TIPO, c.COD_AUTOR, c.COD_ESTILO, c.COD_ARTISTA, ca.DURACION " 
+					"SELECT c.COD_CONTIDO, c.NOME, c.TIPO, c.COD_AUTOR, c.COD_ESTILO, c.COD_ARTISTA, a.FECHA_PUBLICACION, a.NOME_DISCOGRAFICA " 
 							+ "FROM CONTIDO c"
-							+ "INNER JOIN cancion ca "
-							+ "ON c.COD_CANCION = c.COD_CONTIDO "
+							+ "INNER JOIN ALBUM a "
+							+ "ON c.COD_CONTIDO = a.COD_ALBUM "
 							+ "WHERE c.COD_CONTIDO = ? ";
 			
 			preparedStatement = connection.prepareStatement(queryString,
@@ -38,16 +39,16 @@ public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 
 			resultSet = preparedStatement.executeQuery();
 
-			Cancion c = null;
+			Album a = null;
 
 			if (resultSet.next()) {
-				c = loadNext(connection, resultSet);				
+				a = loadNext(connection, resultSet);				
 			} else {
-				throw new InstanceNotFoundException("Canción with id " + id + 
+				throw new InstanceNotFoundException("Album with id " + id + 
 						"not found", Direccion.class.getName());
 			}
 
-			return c;
+			return a;
 
 		} catch (SQLException e) {
 			throw new DataException(e);
@@ -58,20 +59,25 @@ public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 	}
 
 	
-	protected Cancion loadNext(Connection connection, ResultSet rs) 
+	protected Album loadNext(Connection connection, ResultSet rs) 
 			throws SQLException, DataException{
 			 
 		// Creo el tipo especifico
-		Cancion c = new Cancion();
+		Album a = new Album();
 		
 		// El DAO padre carga los atirbutos comunes
-		super.loadNext(connection, rs, c);
+		super.loadNext(connection, rs, a);
 		
 		// Y carga los suyos propios
-		Long duracion = rs.getLong(6);	
-		c.setDuracion(duracion);
+		Date fecha = rs.getDate(6);	
+		String discografica = rs.getString(7);
+		
+		a.setFechaPublicacion(fecha);
+		a.setNomeDiscografica(discografica);
 				
-		return c;
+		return a;
 	}
+
+	
 
 }
