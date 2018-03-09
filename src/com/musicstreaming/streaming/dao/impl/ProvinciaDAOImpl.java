@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.musicstreaming.streaming.dao.ProvinciaDAO;
 import com.musicstreaming.streaming.model.Provincia;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
@@ -15,6 +18,7 @@ import com.musicstreaming.streaming.exceptions.DataException;
 public class ProvinciaDAOImpl implements ProvinciaDAO {
 	
 public ProvinciaDAOImpl() {}
+private static Logger logger = LogManager.getLogger(ProvinciaDAOImpl.class.getName());
 	
 	@Override
 	public List<Provincia> findByPaisIdioma(Connection connection, String codPais, String codIdioma)
@@ -55,6 +59,7 @@ public ProvinciaDAOImpl() {}
 			return results;
 
 		} catch (SQLException e) {
+			logger.fatal("codPais: "+codPais+", codIdioma: "+codIdioma);
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);

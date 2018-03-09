@@ -4,16 +4,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.musicstreaming.streaming.dao.CancionDAO;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
 import com.musicstreaming.streaming.model.Cancion;
-import com.musicstreaming.streaming.model.Direccion;
 
 public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 	
+	private static Logger logger = LogManager.getLogger(CancionDAOImpl.class.getName());
 	public CancionDAOImpl() {}
 
 	public Cancion findById(Connection connection, Long id) 
@@ -21,7 +25,7 @@ public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-
+		
 		try {          
 			String queryString = 
 					"SELECT c.COD_CONTIDO, c.NOME, c.TIPO, c.COD_AUTOR, c.COD_ESTILO, c.COD_ARTISTA, ca.DURACION " 
@@ -44,17 +48,30 @@ public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 				c = loadNext(connection, resultSet);				
 			} else {
 				throw new InstanceNotFoundException("Canción with id " + id + 
-						"not found", Direccion.class.getName());
+						"not found", Cancion.class.getName());
 			}
 
 			return c;
 
 		} catch (SQLException e) {
+			logger.error("idContido : "+id, e);
 			throw new DataException(e);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
 		}
+	}
+	
+	public List<Cancion> findByGrupo(Connection connection, Long id)
+			throws DataException{
+		
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			String queryString = "SELECT COD_CANCION FROM GRUPO_CONTEN_CANCION WHERE COD_GRUPO = ? ";
+			
+		
 	}
 
 	

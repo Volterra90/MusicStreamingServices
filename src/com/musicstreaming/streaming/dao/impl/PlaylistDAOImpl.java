@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.musicstreaming.streaming.dao.PlaylistDAO;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
@@ -15,6 +18,7 @@ import com.musicstreaming.streaming.model.Playlist;
 public class PlaylistDAOImpl extends ContidoDAOImpl implements PlaylistDAO {
 	
 	public PlaylistDAOImpl() {}
+	private static Logger logger = LogManager.getLogger(PlaylistDAOImpl.class.getName());
 	
 	public Playlist findById(Connection connection,Long id) 
 			throws InstanceNotFoundException, DataException{
@@ -50,6 +54,7 @@ public class PlaylistDAOImpl extends ContidoDAOImpl implements PlaylistDAO {
 			return p;
 
 		} catch (SQLException e) {
+			logger.fatal("idContido "+id);;
 			throw new DataException(e);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);

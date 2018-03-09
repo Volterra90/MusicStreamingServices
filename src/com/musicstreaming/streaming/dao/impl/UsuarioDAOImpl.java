@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.musicstreaming.streaming.dao.UsuarioDAO;
 import com.musicstreaming.streaming.model.Direccion;
 import com.musicstreaming.streaming.model.Usuario;
@@ -18,7 +22,7 @@ import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
 public class UsuarioDAOImpl implements UsuarioDAO {
 	
 	public UsuarioDAOImpl() {}
-
+	private static Logger logger = LogManager.getLogger(UsuarioDAOImpl.class.getName());
 	
 	@Override
 	public Usuario findById (Connection connection, Long id)
@@ -53,6 +57,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			return u;
 
 		} catch (SQLException e) {
+			logger.fatal("idUsuario ="+id);
 			throw new DataException(e);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
@@ -132,6 +137,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			return u;
 
 		} catch (SQLException e) {
+			logger.fatal("Usuario: "+ToStringBuilder.reflectionToString(u));
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);

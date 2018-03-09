@@ -1,6 +1,6 @@
 package com.musicstreaming.streaming.model;
 
-public class GrupoCancions extends Contido {
+public abstract class GrupoCancions extends Contido {
 	
 	public GrupoCancions() {}
 	

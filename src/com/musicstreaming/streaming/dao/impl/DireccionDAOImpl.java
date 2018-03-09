@@ -8,6 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.musicstreaming.streaming.dao.DireccionDAO;
 import com.musicstreaming.streaming.model.Direccion;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
@@ -17,6 +21,7 @@ import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
 
 public class DireccionDAOImpl implements DireccionDAO {
 	
+	private static Logger logger = LogManager.getLogger(DireccionDAOImpl.class.getName());
 	public DireccionDAOImpl() {}
 	
 	@Override
@@ -52,6 +57,7 @@ public class DireccionDAOImpl implements DireccionDAO {
 			return d;
 
 		} catch (SQLException e) {
+			logger.fatal("idDireccion: "+id, e);
 			throw new DataException(e);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
@@ -93,6 +99,7 @@ public class DireccionDAOImpl implements DireccionDAO {
 			return results;
 
 		} catch (SQLException e) {
+			logger.fatal("idUsuario: "+id, e);
 			throw new DataException(e);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
@@ -157,6 +164,7 @@ public class DireccionDAOImpl implements DireccionDAO {
 			return d;
 
 		} catch (SQLException e) {
+			logger.fatal("Direccion : " + ToStringBuilder.reflectionToString(d));
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);
@@ -200,6 +208,7 @@ public class DireccionDAOImpl implements DireccionDAO {
 			
 
 		} catch (SQLException e) {
+			logger.fatal("Direccion : " + ToStringBuilder.reflectionToString(d));
 			throw new DataException(e);    
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);
@@ -231,6 +240,7 @@ public class DireccionDAOImpl implements DireccionDAO {
 			return removedRows;
 
 		} catch (SQLException e) {
+			logger.fatal("idDireccion: "+id,e);
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);

@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.musicstreaming.streaming.dao.AlbumDAO;
 import com.musicstreaming.streaming.dao.CancionDAO;
 import com.musicstreaming.streaming.dao.ContidoDAO;
@@ -22,6 +26,8 @@ public class ContidoDAOImpl implements ContidoDAO {
 	private CancionDAO cancionDAO = null;
 	private AlbumDAO albumDAO = null; 
 	private PlaylistDAO playlistDAO = null;
+	private static Logger logger = LogManager.getLogger(ContidoDAOImpl.class.getName());
+
 
 	public ContidoDAOImpl() {
 		cancionDAO = new CancionDAOImpl();
@@ -41,6 +47,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 					"SELECT c.TIPO " 
 							+ "FROM Contido c  " +
 							"WHERE c.COD_CONTIDO = ? ";
+			
 
 			preparedStatement = connection.prepareStatement(queryString,
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -63,6 +70,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 			return c;
 
 		} catch (SQLException e) {
+			logger.fatal("id contido : "+ id, e);
 			throw new DataException(e);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
@@ -103,6 +111,10 @@ public class ContidoDAOImpl implements ContidoDAO {
 					first = false;
 				}		
 			}
+			
+			if (logger.isDebugEnabled()) {
+				logger.debug(queryString);
+			}
 
 			preparedStatement = connection.prepareStatement(queryString.toString(),
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);		
@@ -123,6 +135,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 			return results;
 
 		} catch (SQLException e) {
+			logger.fatal("Criteria-contido : "+ ToStringBuilder.reflectionToString(cc), e);
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
@@ -137,7 +150,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 		queryString.append(first?" WHERE ": " OR ").append(clause);
 	}
 
-	protected void loadNext(Connection con, ResultSet rs, Contido c)
+	protected void loadNext(Connection connection, ResultSet rs, Contido c)
 			throws SQLException{
 
 		int i = 1;	
@@ -157,26 +170,41 @@ public class ContidoDAOImpl implements ContidoDAO {
 		ResultSet resultSet = null;
 
 		String queryString = "SELECT AVG(NOTA) FROM USUARIO_VOTA_CONTIDO WHERE COD_CONTIDO = "+c.getCodContido();
-
+		preparedStatement = connection.prepareStatement(queryString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		resultSet = preparedStatement.executeQuery();
+		
+		Integer media = resultSet.getInt(1);
+		c.setMedia(media);
 
 	}
 
 	public void vota(Connection connection, Long idUsuario, Long idContido, Integer nota) 
 			throws DataException{
+
+		String queryString = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 
+		Boolean exists = null;
 		try {
-			String queryString = "SELECT COD_CONTIDO, COD_USUARIO FROM USUARIO_VOTA_CONTIDO WHERE COD_CONTIDO = ? AND COD_USUARIO = ?";
+			queryString = "SELECT COD_CONTIDO, COD_USUARIO FROM USUARIO_VOTA_CONTIDO WHERE COD_CONTIDO = ? AND COD_USUARIO = ?";
 			preparedStatement = connection.prepareStatement(queryString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			resultSet = preparedStatement.executeQuery();
-
-			if (!resultSet.next()) {
-
-				queryString = 
-						"INSERT INTO USUARIO_VOTA_CONTIDO (COD_USUARIO, COD_CONTIDO, NOTA) VALUES (?, ?, ?) "; 
-
+			exists = resultSet.next();
+		} catch (SQLException e) {
+			logger.fatal("idUsuario: "+idUsuario+", idContido: "+idContido + ", nota: "+nota, e);
+			throw new DataException(e);
+		} finally {            
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		} 
+		
+		try {
+			
+			if (!exists) {
+				
+				queryString = "INSERT INTO USUARIO_VOTA_CONTIDO (COD_USUARIO, COD_CONTIDO, NOTA) VALUES (?, ?, ?) "; 
 
 				preparedStatement = connection.prepareStatement(queryString,
 						ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -190,8 +218,6 @@ public class ContidoDAOImpl implements ContidoDAO {
 				if (insertedRows == 0) {
 					throw new SQLException("Can not add row to table 'USUARIO_VOTA_CONTIDO'");
 				}
-
-
 
 			} else {
 
@@ -209,10 +235,9 @@ public class ContidoDAOImpl implements ContidoDAO {
 					throw new SQLException("Duplicate row for cod_usuario = '" + 
 							idUsuario+",cod_contido = "+idContido+"' in table 'Shippers'");
 				}                          
-
-
 			}
-		}catch (SQLException e) {
+		} catch (SQLException e) {
+			logger.fatal("idUsuario: "+idUsuario+", idContido: "+idContido + ", nota: "+nota, e);
 			throw new DataException(e);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);

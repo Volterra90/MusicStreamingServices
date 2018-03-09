@@ -35,10 +35,6 @@ public class PaisDAOImpl implements PaisDAO {
 					"FROM PAIS_IDIOMA p  " +
 					"WHERE COD_IDIOMA = ? "+
 					"ORDER BY p.PAIS ASC ";
-	
-			if (logger.isDebugEnabled()) {
-				logger.debug(queryString.toString());
-			}
 			
 			preparedStatement = connection.prepareStatement(queryString,
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -60,6 +56,7 @@ public class PaisDAOImpl implements PaisDAO {
 			return results;
 
 		} catch (SQLException e) {
+			logger.fatal("idIdioma :"+idiomaId);
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);

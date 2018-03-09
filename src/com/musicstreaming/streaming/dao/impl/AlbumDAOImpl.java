@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.musicstreaming.streaming.dao.AlbumDAO;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
@@ -15,11 +18,13 @@ import com.musicstreaming.streaming.model.Direccion;
 
 public class AlbumDAOImpl extends ContidoDAOImpl implements AlbumDAO {
 	
+	private static Logger logger = LogManager.getLogger(AlbumDAOImpl.class.getName());
 	public AlbumDAOImpl() {}
 	
 	public Album findById(Connection connection, Long id) 
 			throws InstanceNotFoundException, DataException{
-
+		
+		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 
@@ -51,6 +56,7 @@ public class AlbumDAOImpl extends ContidoDAOImpl implements AlbumDAO {
 			return a;
 
 		} catch (SQLException e) {
+			logger.fatal("idContido: "+id, e);
 			throw new DataException(e);
 		} finally {            
 			JDBCUtils.closeResultSet(resultSet);
