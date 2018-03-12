@@ -129,7 +129,7 @@ public class DireccionDAOImpl implements DireccionDAO {
 	
 	@Override
 	public Direccion create(Connection connection, Direccion d) 
-     		throws DuplicateInstanceException, DataException{
+     		throws DataException{
 		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;

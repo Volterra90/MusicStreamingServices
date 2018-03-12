@@ -25,12 +25,15 @@ public class Contido {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
 	public char getTipo() {
 		return tipo;
 	}
-	public void setTipo(char tipo) {
+	
+	protected void setTipo(char tipo) {
 		this.tipo = tipo;
 	}
+	
 	public Long getCodArtista() {
 		return codArtista;
 	}
@@ -40,6 +43,7 @@ public class Contido {
 	public Long getCodEstilo() {
 		return codEstilo;
 	}
+	
 	public void setCodEstilo(Long codEstilo) {
 		this.codEstilo = codEstilo;
 	}

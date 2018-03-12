@@ -98,7 +98,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	
 	@Override
 	public Usuario create(Connection connection, Usuario u) 
-     		throws DuplicateInstanceException, DataException{
+     		throws DataException{
 		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;

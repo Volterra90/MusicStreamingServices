@@ -32,8 +32,10 @@ public class AlbumDAOImpl extends ContidoDAOImpl implements AlbumDAO {
 			String queryString = 
 					"SELECT c.COD_CONTIDO, c.NOME, c.TIPO, c.COD_AUTOR, c.COD_ESTILO, c.COD_ARTISTA, a.FECHA_PUBLICACION, a.NOME_DISCOGRAFICA " 
 							+ "FROM CONTIDO c"
-							+ "INNER JOIN ALBUM a "
-							+ "ON c.COD_CONTIDO = a.COD_ALBUM "
+							+ "INNER JOIN GRUPO_CANCIONS gc "
+							+ "ON c.COD_CONTIDO = gc.COD_GRUPO "
+							+ "INNER JOIN ALBUM a"
+							+ "ON gc.COD_GRUPO = a.COD_ALBUM "
 							+ "WHERE c.COD_CONTIDO = ? ";
 			
 			preparedStatement = connection.prepareStatement(queryString,

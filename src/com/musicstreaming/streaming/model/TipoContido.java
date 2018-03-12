@@ -2,8 +2,8 @@ package com.musicstreaming.streaming.model;
 
 public interface TipoContido {
 	
-	public static final char cancion = 'c';
-	public static final char album = 'a';
-	public static final char playlist = 'p';
+	public static final char CANCION = 'C';
+	public static final char ALBUM = 'A';
+	public static final char PLAYLIST = 'P';
 	
 }

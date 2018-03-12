@@ -11,7 +11,10 @@ public interface ContidoService {
 	public Contido findById(Long id)
 			throws InstanceNotFoundException, DataException;
 		
-		public List<Contido> findByCriteria (ContidoCriteria cc)
+	public List<Contido> findByCriteria (ContidoCriteria cc)
 			throws DataException;
+	
+	public Contido create (Contido c)
+		throws DataException; 
 
 }

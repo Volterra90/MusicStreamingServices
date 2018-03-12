@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -62,15 +63,44 @@ public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 		}
 	}
 	
-	public List<Cancion> findByGrupo(Connection connection, Long id)
+	public List<Cancion> findByGrupo(Connection connection, int startIndex, int count, Long id)
 			throws DataException{
 		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		
+		
 		try {
 			String queryString = "SELECT COD_CANCION FROM GRUPO_CONTEN_CANCION WHERE COD_GRUPO = ? ";
+			preparedStatement = connection.prepareStatement(queryString,
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			int i = 1;                
+			preparedStatement.setLong(i++, id);
+
+			resultSet = preparedStatement.executeQuery();
 			
+			List<Cancion> results = new ArrayList<Cancion>();                        
+			Cancion c = null;
+			int currentCount = 0;
+
+			if ((startIndex >=1) && resultSet.absolute(startIndex)) {
+				do {
+					c = findById(connection,resultSet.getLong(1));
+					results.add(c);
+				} while ((currentCount < count) && resultSet.next()) ;
+			}
+
+			return results;
+
+		} catch (SQLException e) {
+			logger.fatal("idCancion : "+ id, e);
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		}
+
 		
 	}
 

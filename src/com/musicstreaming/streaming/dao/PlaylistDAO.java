@@ -11,4 +11,7 @@ public interface PlaylistDAO {
 	public Playlist findById(Connection connection,Long id) 
 			throws InstanceNotFoundException, DataException;
 	
+	public Playlist create (Connection connection, Playlist p)
+			throws DataException;
+	
 }

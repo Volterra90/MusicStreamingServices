@@ -2,10 +2,10 @@ package com.musicstreaming.streaming.model;
 
 public class Playlist extends GrupoCancions{
 	
-	Long codUsuario = null;
+	private Long codUsuario = null;
 	
 	public Playlist() {
-		
+		setTipo(TipoContido.PLAYLIST);
 	}
 
 	public Long getCodUsuario() {

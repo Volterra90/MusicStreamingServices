@@ -12,7 +12,7 @@ public interface CancionDAO {
 	public Cancion findById(Connection connection,Long id) 
 			throws InstanceNotFoundException, DataException;
 	
-	public List<Cancion> findByGrupoCancions (Connection connection, Long id)
+	public List<Cancion> findByGrupo (Connection connection, int startIndex, int count, Long id)
 			throws DataException;
 	
 }

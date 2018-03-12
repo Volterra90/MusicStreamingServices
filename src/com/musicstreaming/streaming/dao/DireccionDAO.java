@@ -23,6 +23,6 @@ public interface DireccionDAO {
 		throws InstanceNotFoundException, DataException;
 	
 	public long delete(Connection connection, Long id)
-		throws InstanceNotFoundException, DataException;
+		throws DataException;
      
 }

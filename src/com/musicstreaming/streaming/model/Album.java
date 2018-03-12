@@ -8,7 +8,9 @@ public class Album extends GrupoCancions {
 	private Date fechaPublicacion = null;
 	private String nomeDiscografica = null;
 	
-	public Album() {}
+	public Album() {
+		setTipo(TipoContido.ALBUM);
+	}
 	
 	//Getters & Setters
 	public Date getFechaPublicacion() {
