@@ -13,11 +13,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.musicstreaming.streaming.dao.DireccionDAO;
-import com.musicstreaming.streaming.model.Direccion;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
-import com.musicstreaming.streaming.exceptions.DuplicateInstanceException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
+import com.musicstreaming.streaming.model.Direccion;
 
 public class DireccionDAOImpl implements DireccionDAO {
 	

@@ -1,12 +1,18 @@
 package com.musicstreaming.streaming.dao.util;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
 public class ConnectionManager	 {
 
+	private static Logger logger = LogManager.getLogger(ConnectionManager.class.getName());
+	
 	private static ResourceBundle dbConfiguration = ResourceBundle.getBundle("DBConfiguration");
 
 	private static final String DRIVER_CLASS_NAME_PARAMETER = "jdbc.driver.classname";
@@ -18,6 +24,8 @@ public class ConnectionManager	 {
 	private static String user;
 	private static String password;
 
+	private static ComboPooledDataSource dataSource = null;
+	
 	static {
 
 		try {
@@ -27,12 +35,19 @@ public class ConnectionManager	 {
 			user = dbConfiguration.getString(USER_PARAMETER);
 			password = dbConfiguration.getString(PASSWORD_PARAMETER);
 
-			/* Load driver. */
-			Class.forName(driverClassName);
+			// Carga el driver directamente, sin pool 
+			// Class.forName(driverClassName);
+			
+			// Pool (Aunque la clase se apellide DataSource no es un java.sql.DataSource)
+			dataSource = new ComboPooledDataSource();
+			dataSource.setDriverClass(driverClassName); //loads the jdbc driver            
+			dataSource.setJdbcUrl(url);
+			dataSource.setUser(user);                                  
+			dataSource.setPassword(password);  
+			
 
 		} catch (Exception e) {
-			// JAL: TODO Logger
-			e.printStackTrace(); 
+			logger.fatal(e.getMessage(), e); 
 		}
 
 	}
@@ -40,7 +55,8 @@ public class ConnectionManager	 {
 	private ConnectionManager() {}
 
 	public final static Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(url, user, password);
+		//return DriverManager.getConnection(url, user, password);
+		return dataSource.getConnection();
 	}
 	
 }

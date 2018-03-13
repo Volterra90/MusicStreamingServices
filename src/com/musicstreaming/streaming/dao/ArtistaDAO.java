@@ -1,7 +1,6 @@
 package com.musicstreaming.streaming.dao;
 
 import java.sql.Connection;
-import java.util.Date;
 
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;

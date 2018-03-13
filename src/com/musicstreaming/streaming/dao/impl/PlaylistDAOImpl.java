@@ -17,7 +17,6 @@ import com.musicstreaming.streaming.exceptions.DuplicateInstanceException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
 import com.musicstreaming.streaming.model.Direccion;
 import com.musicstreaming.streaming.model.Playlist;
-import com.musicstreaming.streaming.model.Usuario;
 
 public class PlaylistDAOImpl extends ContidoDAOImpl implements PlaylistDAO {
 	
