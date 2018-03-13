@@ -16,7 +16,7 @@ import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
  * @author https://www.linkedin.com/in/joseantoniolopezperez
  * @version 0.2
  */
-public class ContidoMockServiceImpl implements ContidoService {
+public class ContidoServiceImpl implements ContidoService {
 	
 		
 	public ContidoMockServiceImpl() {		
