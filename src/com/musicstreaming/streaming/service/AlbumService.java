@@ -1,14 +1,11 @@
-package com.musicstreaming.streaming.dao;
-
-import java.sql.Connection;
+package com.musicstreaming.streaming.service;
 
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
 import com.musicstreaming.streaming.model.Album;
 
-public interface AlbumDAO {
+public interface AlbumService {
 	
-	public Album findById(Connection connection,Long id) 
+	public Album findById(Long id) 
 			throws InstanceNotFoundException, DataException;
-	
 }

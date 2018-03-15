@@ -11,9 +11,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.musicstreaming.streaming.dao.ProvinciaDAO;
-import com.musicstreaming.streaming.model.Provincia;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
+import com.musicstreaming.streaming.model.Provincia;
 
 public class ProvinciaDAOImpl implements ProvinciaDAO {
 	
@@ -53,7 +53,7 @@ private static Logger logger = LogManager.getLogger(ProvinciaDAOImpl.class.getNa
 			Provincia p = null;
 
 			while (resultSet.next()) {
-				p = loadNext (connection,resultSet);
+				p = loadNext (resultSet);
 				results.add(p);
 			}
 			return results;
@@ -67,7 +67,54 @@ private static Logger logger = LogManager.getLogger(ProvinciaDAOImpl.class.getNa
 		}
 	}
 	
-	private Provincia loadNext(Connection connection, ResultSet resultSet)
+	public List<Provincia> findAll(Connection connection, String codIdioma,
+		 	int startIndex, int count) 
+	throws DataException{
+		
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		try {
+
+			// Create "preparedStatement"       
+			String queryString = 
+					"SELECT pi.COD_PROVINCIA, pi.COD_IDIOMA, pi.PROVINCIA " + 
+					"FROM PROVINCIA_IDIOMA pi  " +
+					"ORDER BY pi.PROVINCIA asc ";
+			// Debatir sobre ordenacion por ... y opciones
+
+			preparedStatement = connection.prepareStatement(queryString,
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			// Execute query.
+			resultSet = preparedStatement.executeQuery();
+
+			// Recupera la pagina de resultados
+			List<Provincia> results = new ArrayList<Provincia>();                        
+			Provincia p = null;
+			int currentCount = 0;
+
+			if ((startIndex >=1) && resultSet.absolute(startIndex)) {
+				do {
+					p = loadNext(resultSet);
+					results.add(p);               	
+					currentCount++;                	
+				} while ((currentCount < count) && resultSet.next()) ;
+			}
+
+			return results;
+
+		} catch (SQLException e) {
+			logger.error("codIdioma: "+codIdioma+"startIndex: "+startIndex + ", count: "+count, e);
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		}
+	}
+
+	
+	private Provincia loadNext(ResultSet resultSet)
 			throws SQLException, DataException {
 
 				int i = 1;

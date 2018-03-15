@@ -7,6 +7,7 @@ import java.util.List;
 import com.musicstreaming.streaming.dao.ProvinciaDAO;
 import com.musicstreaming.streaming.dao.impl.ProvinciaDAOImpl;
 import com.musicstreaming.streaming.dao.util.ConnectionManager;
+import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.model.Provincia;
 import com.musicstreaming.streaming.service.ProvinciaService;
@@ -42,6 +43,25 @@ public class ProvinciaServiceImpl implements ProvinciaService{
 			}
 		}
 
+	}
+
+	public List<Provincia> findAll(String codIdioma,
+			int startIndex, int count) 
+					throws DataException{
+		Connection connection = null;
+
+		try {
+
+			connection = ConnectionManager.getConnection();
+			connection.setAutoCommit(true);
+
+			return provinciaDao.findAll(connection, codIdioma, startIndex, count);	
+
+		} catch (SQLException e){
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeConnection(connection);
+		}
 	}
 }
 
