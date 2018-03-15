@@ -39,8 +39,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 			connection = ConnectionManager.getConnection();
 			connection.setAutoCommit(true);
 
-			Usuario u = usuarioDao.findById(connection, id);	
-
+			Usuario u = usuarioDao.findById(connection, id);
+			
 			return u;
 
 		} catch (SQLException e){
@@ -71,7 +71,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 			// Execute action
 			Usuario result = usuarioDao.create(connection, u);
-
+			
 			mailService.sendMail("Benvido a MusicStreaming", "Benvido a MusicStreaming!", u.getEmail());
 
 			commit = true;

@@ -45,23 +45,5 @@ public class ProvinciaServiceImpl implements ProvinciaService{
 
 	}
 
-	public List<Provincia> findAll(String codIdioma,
-			int startIndex, int count) 
-					throws DataException{
-		Connection connection = null;
-
-		try {
-
-			connection = ConnectionManager.getConnection();
-			connection.setAutoCommit(true);
-
-			return provinciaDao.findAll(connection, codIdioma, startIndex, count);	
-
-		} catch (SQLException e){
-			throw new DataException(e);
-		} finally {
-			JDBCUtils.closeConnection(connection);
-		}
-	}
 }
 

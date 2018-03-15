@@ -9,9 +9,5 @@ public interface ProvinciaService {
 	
 	public List<Provincia> findByPaisIdioma (String codPais, String codIdioma)
 			throws DataException;
-	
-	public List<Provincia> findAll(String codIdioma,
-		 	int startIndex, int count) 
-	throws DataException;
 
 }

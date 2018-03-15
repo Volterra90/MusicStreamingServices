@@ -7,7 +7,7 @@ public class Usuario{
 	//Atributos
 	private Long idUsuario = null;
 	private Date fechaSubscricion = null;
-	private String xenero = null;
+	private Character xenero = null;
 	private Date fechaNacemento = null;
 	private String email = null;
 	private String contrasinal = null;
@@ -34,10 +34,10 @@ public class Usuario{
 	public void setFechaSubscricion(Date fechaSubscricion) {
 		this.fechaSubscricion = fechaSubscricion;
 	}
-	public String getXenero() {
+	public Character getXenero() {
 		return xenero;
 	}
-	public void setXenero(String xenero) {
+	public void setXenero(Character xenero) {
 		this.xenero = xenero;
 	}
 	public Date getFechaNacemento() {
