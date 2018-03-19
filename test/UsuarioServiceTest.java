@@ -1,18 +1,21 @@
-import com.musicstreaming.streaming.model.Direccion;
+import java.util.Date;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.musicstreaming.streaming.model.Usuario;
+import com.musicstreaming.streaming.service.UsuarioService;
+import com.musicstreaming.streaming.service.impl.UsuarioServiceImpl;
 import com.musicstreaming.streaming.util.PasswordEncryptionUtil;
-import com.sacra.ecommerce.model.Transportista;
-import com.sacra.ecommerce.model.User;
-import com.sacra.ecommerce.service.UserService;
-import com.sacra.ecommerce.service.UserServiceTest;
-import com.sacra.ecommerce.service.impl.MockUserServiceImpl;
-import com.sacra.ecommerce.util.ToStringUtil;
+import com.musicstreaming.streaming.util.ToStringUtil;
 
 public class UsuarioServiceTest {
 
 	private UsuarioService usuarioService = null;
+	private static Logger logger = LogManager.getLogger(UsuarioServiceTest.class.getName());
 
-	public UserServiceTest() {
+	public UsuarioServiceTest() {
 		usuarioService = new UsuarioServiceImpl();
 	}
 
@@ -20,11 +23,14 @@ public class UsuarioServiceTest {
 
 		logger.info("Testing findById ...");
 		// Test data
-		Long id = 1L;
+		Long id = 9L;
 
 		try {
 
 			Usuario u = usuarioService.findById(id);
+			if (logger.isDebugEnabled()) {
+				logger.debug("Usuario: " +ToStringBuilder.reflectionToString(u));
+			}
 		} catch (Throwable t) {
 			logger.error("id = " + id, t);
 		}
@@ -37,18 +43,16 @@ public class UsuarioServiceTest {
 
 		// Test data:
 		Usuario u = new Usuario();
-		u.setApelidos("Varela Méndez");
-		String plainPassword = "1234.,";
+		u.setApelidos("Taboada Varela");
+		String plainPassword = "CrihtoGuapo92";
 		u.setContrasinal(PasswordEncryptionUtil.encryptPassword(plainPassword));
 		u.setEmail("topomusero@gmail.com");
-		u.setFechaNacemento("1990/12/02");
-		u.setFechaSubscricion("2018/03/15");
-		u.setNick("Volterra_90");
+		u.setFechaNacemento(new Date());
+		u.setFechaSubscricion(new Date());
+		u.setNick("Volterra");
 		u.setNome("Alberto");
 		u.setXenero('H');
 		
-		
-		u.setDireccion(d);
 		try {
 
 			u = usuarioService.create(u);
@@ -62,9 +66,9 @@ public class UsuarioServiceTest {
 	}
 
 	public static void main(String args[]) {
-		UserServiceTest test = new UserServiceTest();
-		test.testUserNotFound();
-		test.testUserNotFound();
+		UsuarioServiceTest test = new UsuarioServiceTest();
+		test.testCreate();
+		test.testFindById();
 	}
 
 }

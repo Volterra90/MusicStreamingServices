@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.logging.log4j.LogManager;
@@ -20,9 +19,12 @@ import com.musicstreaming.streaming.model.Playlist;
 
 public class PlaylistDAOImpl extends ContidoDAOImpl implements PlaylistDAO {
 	
-	public PlaylistDAOImpl() {}
 	private static Logger logger = LogManager.getLogger(PlaylistDAOImpl.class.getName());
 	
+	public PlaylistDAOImpl() {		
+		super("");
+	}
+
 	@Override
 	public Playlist findById(Connection connection,Long id) 
 			throws InstanceNotFoundException, DataException{
@@ -91,24 +93,38 @@ public class PlaylistDAOImpl extends ContidoDAOImpl implements PlaylistDAO {
      		throws DuplicateInstanceException, DataException{
 		
 		PreparedStatement preparedStatement = null;
-		try {          
+		PreparedStatement preparedStatement2 = null;
+		
+		try {
 			
-			String queryString = "INSERT INTO PLAYLIST(COD_PLAYLIST, COD_USUARIO)"
-					+ "VALUES (?, ?)";
-
+			String queryString = "INSERT INTO GRUPO_CANCIONS (COD_GRUPO) VALUES (?)";
 			preparedStatement = connection.prepareStatement(queryString,
-					Statement.RETURN_GENERATED_KEYS);
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			int i = 1;     
+			int i=1;
 			preparedStatement.setLong(i++, p.getCodContido());
-			preparedStatement.setLong(i++, p.getCodUsuario());
-
+			
 			int insertedRows = preparedStatement.executeUpdate();
+			
+			if (insertedRows ==0) {
+				throw new SQLException ("Can not add row to table 'Grupo cancións");
+			}
+			
+			String queryString2 = "INSERT INTO PLAYLIST(COD_PLAYLIST, COD_USUARIO)"
+					+ "VALUES (?, ?)";
+			
+			preparedStatement2 = connection.prepareStatement(queryString2,
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			
+			int j = 1;     
+			preparedStatement2.setLong(j++, p.getCodContido());
+			preparedStatement2.setLong(j++, p.getCodUsuario());
 
-			if (insertedRows == 0) {
+			int insertedRows2 = preparedStatement.executeUpdate();
+
+			if (insertedRows2 == 0) {
 				throw new SQLException("Can not add row to table 'Playlist'");
 			} 
-			
 
 			return p;
 
@@ -117,6 +133,7 @@ public class PlaylistDAOImpl extends ContidoDAOImpl implements PlaylistDAO {
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);
+			JDBCUtils.closeStatement(preparedStatement2);
 		}
 		
 		

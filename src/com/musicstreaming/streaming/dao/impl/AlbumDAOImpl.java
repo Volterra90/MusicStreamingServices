@@ -19,7 +19,9 @@ import com.musicstreaming.streaming.model.Direccion;
 public class AlbumDAOImpl extends ContidoDAOImpl implements AlbumDAO {
 	
 	private static Logger logger = LogManager.getLogger(AlbumDAOImpl.class.getName());
-	public AlbumDAOImpl() {}
+	public AlbumDAOImpl() {
+		super("");
+	}
 	
 	public Album findById(Connection connection, Long id) 
 			throws InstanceNotFoundException, DataException{

@@ -25,10 +25,12 @@ import com.musicstreaming.streaming.service.ContidoCriteria;
 
 public class ContidoDAOImpl implements ContidoDAO {
 
+	private static Logger logger = LogManager.getLogger(ContidoDAOImpl.class.getName());
+	
 	private CancionDAO cancionDAO = null;
 	private AlbumDAO albumDAO = null; 
 	private PlaylistDAO playlistDAO = null;
-	private static Logger logger = LogManager.getLogger(ContidoDAOImpl.class.getName());
+
 
 
 	public ContidoDAOImpl() {
@@ -37,6 +39,9 @@ public class ContidoDAOImpl implements ContidoDAO {
 		playlistDAO = new PlaylistDAOImpl();
 	}
 
+	protected ContidoDAOImpl(String s) {		
+	}
+	
 	@Override 
 	public Contido findById(Connection connection, Long id) 
 			throws InstanceNotFoundException, DataException {
@@ -58,9 +63,11 @@ public class ContidoDAOImpl implements ContidoDAO {
 			preparedStatement.setLong(i++, id);
 
 			resultSet = preparedStatement.executeQuery();
-
-			Character tipo = resultSet.getString(0).charAt(0);
-
+			
+			logger.debug(resultSet);
+			
+			Character tipo = resultSet.getString(1).charAt(0);
+			
 			Contido c = null;
 
 			switch (tipo) {

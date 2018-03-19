@@ -103,7 +103,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		ResultSet resultSet = null;
 		try {          
 			
-			String queryString = "INSERT INTO USUARIO(FECHA_SUBSCRICION, XENERO, FECHA_NACEMENTO, E_MAIL, CONTRASINAL, NOME, APELIDOS)"
+			String queryString = "INSERT INTO USUARIO(FECHA_SUBSCRICION, XENERO, FECHA_NACEMENTO, E_MAIL, CONTRASINAL, NOME, APELIDOS, NICK)"
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 			preparedStatement = connection.prepareStatement(queryString,
@@ -117,6 +117,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			preparedStatement.setString(i++, u.getContrasinal());
 			preparedStatement.setString(i++, u.getNome());
 			preparedStatement.setString(i++, u.getApelidos());
+			preparedStatement.setString(i++, u.getNick());
 
 			int insertedRows = preparedStatement.executeUpdate();
 

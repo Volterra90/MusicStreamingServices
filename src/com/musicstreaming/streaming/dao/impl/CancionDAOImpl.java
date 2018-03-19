@@ -19,8 +19,11 @@ import com.musicstreaming.streaming.model.Cancion;
 public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 	
 	private static Logger logger = LogManager.getLogger(CancionDAOImpl.class.getName());
-	public CancionDAOImpl() {}
+	public CancionDAOImpl() {
+		super("");
+	}
 
+	@Override
 	public Cancion findById(Connection connection, Long id) 
 			throws InstanceNotFoundException, DataException{
 
@@ -63,6 +66,7 @@ public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 		}
 	}
 	
+	@Override
 	public List<Cancion> findByGrupo(Connection connection, int startIndex, int count, Long id)
 			throws DataException{
 		
