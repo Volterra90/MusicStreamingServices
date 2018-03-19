@@ -37,7 +37,7 @@ public class UsuarioServiceTest {
 
 		// Test data:
 		Usuario u = new Usuario();
-		u.setApelidos("Taboada Varela");
+		u.setApelidos("Varela Méndez");
 		String plainPassword = "1234.,";
 		u.setContrasinal(PasswordEncryptionUtil.encryptPassword(plainPassword));
 		u.setEmail("topomusero@gmail.com");
