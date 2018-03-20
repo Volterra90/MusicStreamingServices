@@ -23,11 +23,11 @@ public class UsuarioServiceTest {
 
 		logger.info("Testing findById ...");
 		// Test data
-		Long id = 1L;
+		String id = "Volterra";
 
 		try {
 
-			Usuario u = usuarioService.findById(id);
+			Usuario u = usuarioService.findUserById(id);
 			if (logger.isDebugEnabled()) {
 				logger.debug("Usuario: " +ToStringBuilder.reflectionToString(u));
 			}
@@ -67,7 +67,7 @@ public class UsuarioServiceTest {
 
 	public static void main(String args[]) {
 		UsuarioServiceTest test = new UsuarioServiceTest();
-		test.testCreate();
+		/*test.testCreate();*/
 		test.testFindById();
 	}
 
