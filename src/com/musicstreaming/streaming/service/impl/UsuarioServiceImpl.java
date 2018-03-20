@@ -29,7 +29,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		mailService = new MailServiceImpl();
 	}
 
-	public Usuario findById (Long id)
+	public Usuario findUserById (String id)
 			throws InstanceNotFoundException, DataException{
 
 		Connection connection = null;
@@ -39,7 +39,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			connection = ConnectionManager.getConnection();
 			connection.setAutoCommit(true);
 
-			Usuario u = usuarioDao.findById(connection, id);
+			Usuario u = usuarioDao.findUserById(connection, id);
 			
 			return u;
 

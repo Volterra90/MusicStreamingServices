@@ -24,7 +24,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	private static Logger logger = LogManager.getLogger(UsuarioDAOImpl.class.getName());
 	
 	@Override
-	public Usuario findById (Connection connection, Long id)
+	public Usuario findUserById (Connection connection, String id)
 		throws InstanceNotFoundException, DataException{
 		
 		PreparedStatement preparedStatement = null;
@@ -34,13 +34,14 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			String queryString = 
 					"SELECT u.COD_USUARIO, u.FECHA_SUBSCRICION, u.XENERO, u.FECHA_NACEMENTO, u.E_MAIL, u.CONTRASINAL, u.NOME, u.APELIDOS, u.NICK " 
 							+ "FROM Usuario u  " +
-							"WHERE u.COD_USUARIO = ? ";
+							"WHERE u.NICK = ? OR u.EMAIL = ? ";
 			
 			preparedStatement = connection.prepareStatement(queryString,
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			int i = 1;                
-			preparedStatement.setLong(i++, id);
+			preparedStatement.setString(i++, id);
+			preparedStatement.setString(i++, id);
 
 			resultSet = preparedStatement.executeQuery();
 

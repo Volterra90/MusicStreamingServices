@@ -7,7 +7,7 @@ import com.musicstreaming.streaming.model.Usuario;
 
 public interface UsuarioService {
 	
-	public Usuario findById (Long id)
+	public Usuario findUserById (String id)
 		throws InstanceNotFoundException, DataException;
 	
 	public Usuario create(Usuario u) 

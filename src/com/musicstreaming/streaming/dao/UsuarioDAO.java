@@ -8,7 +8,7 @@ import com.musicstreaming.streaming.model.Usuario;
 
 public interface UsuarioDAO {
 	
-	public Usuario findById(Connection connection, Long id) 
+	public Usuario findUserById(Connection connection, String id) 
 			throws InstanceNotFoundException, DataException;
 	
 	public Usuario create(Connection connection, Usuario u) 
