@@ -2,7 +2,6 @@ package com.musicstreaming.streaming.service.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,25 +39,6 @@ public class ArtistaServiceImpl implements ArtistaService {
 
 		} catch (SQLException e){
 			logger.error("idUsuario: "+id, e);
-			throw new DataException(e);
-		} finally {
-			JDBCUtils.closeConnection(connection);
-		}
-	}
-	
-	public List<Artista> findByNombre (String nomeArtista, int startIndex, int count)
-			throws DataException {
-		Connection connection = null;
-
-		try {
-
-			connection = ConnectionManager.getConnection();
-			connection.setAutoCommit(true);
-
-			return artistaDao.findByNombre(connection, nomeArtista, startIndex, count);
-
-		} catch (SQLException e){
-			logger.error("nomeArtista :" + nomeArtista, e);
 			throw new DataException(e);
 		} finally {
 			JDBCUtils.closeConnection(connection);

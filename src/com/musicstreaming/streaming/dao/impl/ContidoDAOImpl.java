@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,7 +49,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-
+		Character tipo = null;
 		try {          
 			String queryString = 
 					"SELECT c.TIPO " 
@@ -64,9 +65,10 @@ public class ContidoDAOImpl implements ContidoDAO {
 
 			resultSet = preparedStatement.executeQuery();
 			
-			logger.debug(resultSet);
 			
-			Character tipo = resultSet.getString(1).charAt(0);
+			if (resultSet.next()) {	
+				tipo = resultSet.getString(1).charAt(0);
+			}
 			
 			Contido c = null;
 
@@ -106,7 +108,12 @@ public class ContidoDAOImpl implements ContidoDAO {
 			queryString = new StringBuilder(
 					"SELECT c.COD_CONTIDO FROM Contido c ");
 
-			// Marca (flag) de primera clausula, que se desactiva en la primera
+			if (!StringUtils.isEmpty(cc.getNomeArtista())) {
+				queryString.append("INNER JOIN ARTISTA a ON c.COD_ARTISTA = a.COD_ARTISTA AND a.NOME_ARTISTA LIKE ? ");
+			}
+			
+			
+			
 			boolean first = true;
 
 			int i;
@@ -126,14 +133,19 @@ public class ContidoDAOImpl implements ContidoDAO {
 					first = false;
 				}		
 			}
-
+			
 			if (logger.isDebugEnabled()) {
 				logger.debug(queryString);
 			}
 
 			preparedStatement = connection.prepareStatement(queryString.toString(),
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);		
-
+			
+			i = 1;
+			if (cc.getNomeArtista()!=null) {
+				preparedStatement.setString(i++, cc.getNomeArtista());
+			}
+			
 			resultSet = preparedStatement.executeQuery();
 
 			List<Contido> results = new ArrayList<Contido>();                        
@@ -169,6 +181,8 @@ public class ContidoDAOImpl implements ContidoDAO {
 			throws SQLException{
 
 		int i = 1;	
+		Integer media = 0;
+		
 		Long codContido = rs.getLong(i++);
 		String nome = rs.getString(i++);
 		Long codEstilo = rs.getLong(i++);
@@ -178,6 +192,8 @@ public class ContidoDAOImpl implements ContidoDAO {
 		c.setCodContido(codContido);
 		c.setCodEstilo(codEstilo);
 		c.setNome(nome);		
+		
+		logger.debug("codArtista: "+c.getCodArtista());
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -185,8 +201,10 @@ public class ContidoDAOImpl implements ContidoDAO {
 		String queryString = "SELECT AVG(NOTA) FROM USUARIO_VOTA_CONTIDO WHERE COD_CONTIDO = "+c.getCodContido();
 		preparedStatement = connection.prepareStatement(queryString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		resultSet = preparedStatement.executeQuery();
-
-		Integer media = resultSet.getInt(1);
+		if (resultSet.next()) {
+			media = resultSet.getInt(1);
+		}
+		
 		c.setMedia(media);
 
 	}
@@ -203,6 +221,10 @@ public class ContidoDAOImpl implements ContidoDAO {
 		try {
 			queryString = "SELECT COD_CONTIDO, COD_USUARIO FROM USUARIO_VOTA_CONTIDO WHERE COD_CONTIDO = ? AND COD_USUARIO = ?";
 			preparedStatement = connection.prepareStatement(queryString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			
+			int i = 1;
+			preparedStatement.setLong(i++, idContido);
+			preparedStatement.setLong(i++, idUsuario);
 
 			resultSet = preparedStatement.executeQuery();
 			exists = resultSet.next();
@@ -269,17 +291,18 @@ public class ContidoDAOImpl implements ContidoDAO {
 
 		try {          
 			String queryString = 
-					"INSERT INTO CONTIDO (NOME, TIPO, COD_ESTILO, COD_ARTISTA) VALUES (?, ?, ?, ?) "; 
+					"INSERT INTO CONTIDO (NOME, COD_ESTILO, TIPO) VALUES (?, ?, ?) "; 
 
 			preparedStatement = connection.prepareStatement(queryString,
 					Statement.RETURN_GENERATED_KEYS);
 
 			int i = 1;                
-			preparedStatement.setLong(i++, c.getCodContido());
-			preparedStatement.setString(i++, String.valueOf(c.getTipo()));
-			preparedStatement.setLong(i++, c.getCodEstilo());
-			preparedStatement.setLong(i++, c.getCodArtista());
 
+			preparedStatement.setString(i++, c.getNome());
+			preparedStatement.setLong(i++, c.getCodEstilo());
+			preparedStatement.setString(i++, String.valueOf(c.getTipo()));
+			
+			
 			int insertedRows = preparedStatement.executeUpdate();
 
 			if (insertedRows == 0) {

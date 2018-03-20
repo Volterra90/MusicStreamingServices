@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -67,60 +65,6 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 
 	}
 
-	@Override
-	public List<Artista> findByNombre (Connection connection, String nomeArtista, int startIndex, int count)
-			throws DataException{
-
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-
-		try {
-
-			// Create "preparedStatement"       
-			String queryString = 
-					"SELECT a.COD_ARTISTA, a.ANO_FORMACION, a.NOME_ARTISTA " + 
-							"FROM ARTISTA a  " +
-							"WHERE UPPER(s.NOME_ARTISTA) LIKE ? "+
-							"ORDER BY a.NOME_ARTISTA asc ";
-
-			preparedStatement = connection.prepareStatement(queryString,
-					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
-			// Fill parameters
-			int i = 1;                
-			preparedStatement.setString(i++, "%" + nomeArtista.toUpperCase() + "%");
-			// Nos prevenimos de SQL Injection:
-			// http://en.wikipedia.org/wiki/SQL_injection
-			// http://unixwiz.net/techtips/sql-injection.html
-
-
-			// Execute query.
-			resultSet = preparedStatement.executeQuery();
-
-			// Recupera la pagina de resultados
-			List<Artista> results = new ArrayList<Artista>();                        
-			Artista a = null;
-			int currentCount = 0;
-
-			if ((startIndex >=1) && resultSet.absolute(startIndex)) {
-				do {
-					a = loadNext(resultSet);
-					results.add(a);               	
-					currentCount++;                	
-				} while ((currentCount < count) && resultSet.next()) ;
-			}
-
-			return results;
-
-		} catch (SQLException e) {
-			logger.error("name: "+nomeArtista + ", startIndex: "+startIndex + ", count: "+count, e);
-			throw new DataException(e);
-		} finally {
-			JDBCUtils.closeResultSet(resultSet);
-			JDBCUtils.closeStatement(preparedStatement);
-		}
-
-	}
 	
 	private Artista loadNext(ResultSet resultSet)
 			throws SQLException {

@@ -5,7 +5,7 @@ public class Cancion extends Contido {
 	private Long duracion = null;
 	
 	public Cancion() {
-		setTipo(TipoContido.PLAYLIST);
+		setTipo(TipoContido.CANCION);
 	}
 	
 	public Long getDuracion() {

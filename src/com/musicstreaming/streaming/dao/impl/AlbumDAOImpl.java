@@ -14,7 +14,6 @@ import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
 import com.musicstreaming.streaming.model.Album;
-import com.musicstreaming.streaming.model.Direccion;
 
 public class AlbumDAOImpl extends ContidoDAOImpl implements AlbumDAO {
 	
@@ -32,11 +31,11 @@ public class AlbumDAOImpl extends ContidoDAOImpl implements AlbumDAO {
 
 		try {          
 			String queryString = 
-					"SELECT c.COD_CONTIDO, c.NOME, c.TIPO, c.COD_AUTOR, c.COD_ESTILO, c.COD_ARTISTA, a.FECHA_PUBLICACION, a.NOME_DISCOGRAFICA " 
-							+ "FROM CONTIDO c"
+					"SELECT c.COD_CONTIDO, c.NOME, c.COD_ESTILO, c.COD_ARTISTA, a.FECHA_PUBLICACION, a.NOME_DISCOGRAFICA " 
+							+ "FROM CONTIDO c "
 							+ "INNER JOIN GRUPO_CANCIONS gc "
 							+ "ON c.COD_CONTIDO = gc.COD_GRUPO "
-							+ "INNER JOIN ALBUM a"
+							+ "INNER JOIN ALBUM a "
 							+ "ON gc.COD_GRUPO = a.COD_ALBUM "
 							+ "WHERE c.COD_CONTIDO = ? ";
 			
@@ -54,7 +53,7 @@ public class AlbumDAOImpl extends ContidoDAOImpl implements AlbumDAO {
 				a = loadNext(connection, resultSet);				
 			} else {
 				throw new InstanceNotFoundException("Album with id " + id + 
-						"not found", Direccion.class.getName());
+						"not found", Album.class.getName());
 			}
 
 			return a;
@@ -79,8 +78,8 @@ public class AlbumDAOImpl extends ContidoDAOImpl implements AlbumDAO {
 		super.loadNext(connection, rs, a);
 		
 		// Y carga los suyos propios
-		Date fecha = rs.getDate(6);	
-		String discografica = rs.getString(7);
+		Date fecha = rs.getDate(5);	
+		String discografica = rs.getString(6);
 		
 		a.setFechaPublicacion(fecha);
 		a.setNomeDiscografica(discografica);

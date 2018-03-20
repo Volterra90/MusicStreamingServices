@@ -23,7 +23,7 @@ public class UsuarioServiceTest {
 
 		logger.info("Testing findById ...");
 		// Test data
-		Long id = 9L;
+		Long id = 1L;
 
 		try {
 

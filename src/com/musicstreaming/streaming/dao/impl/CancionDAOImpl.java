@@ -32,10 +32,10 @@ public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 		
 		try {          
 			String queryString = 
-					"SELECT c.COD_CONTIDO, c.NOME, c.TIPO, c.COD_AUTOR, c.COD_ESTILO, c.COD_ARTISTA, ca.DURACION " 
-							+ "FROM CONTIDO c"
+					"SELECT c.COD_CONTIDO, c.NOME, c.COD_ESTILO, c.COD_ARTISTA, ca.DURACION " 
+							+ "FROM CONTIDO c "
 							+ "INNER JOIN cancion ca "
-							+ "ON c.COD_CANCION = c.COD_CONTIDO "
+							+ "ON ca.COD_CANCION = c.COD_CONTIDO "
 							+ "WHERE c.COD_CONTIDO = ? ";
 			
 			preparedStatement = connection.prepareStatement(queryString,
@@ -119,7 +119,7 @@ public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 		super.loadNext(connection, rs, c);
 		
 		// Y carga los suyos propios
-		Long duracion = rs.getLong(6);	
+		Long duracion = rs.getLong(5);	
 		c.setDuracion(duracion);
 				
 		return c;

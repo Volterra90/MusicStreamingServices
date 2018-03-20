@@ -12,19 +12,22 @@ import com.musicstreaming.streaming.service.impl.ContidoServiceImpl;
 import com.musicstreaming.streaming.util.ToStringUtil;
 
 public class ContidoServiceTest {
-	
+
 	private ContidoService contidoService = null;
 	private static Logger logger = LogManager.getLogger(UsuarioServiceTest.class.getName());
 
 	public ContidoServiceTest() {
 		contidoService = new ContidoServiceImpl();
 	}
-	
+
 	protected void testFindById() {
 
 		logger.info("Testing findById ...");
 		// Test data
-		Long id = 1L;
+		/*Long id = 3L;  (Usar este ID para comprobar Canciones)*/
+		/*Long id = 1L;  //(Usar este ID para comprobar Álbumes)*/
+		Long id = 2L; /*(Usar este ID para comprobar Playlists)*/
+
 
 		try {
 
@@ -38,21 +41,21 @@ public class ContidoServiceTest {
 		logger.info("Test testFindById finished.\n");
 
 	}
-	
+
 	protected void testFindByCriteria() {
 		logger.info("Testing findbyCriteria ...");
 		// Test data:		
 		int pageSize = 2;
 		ContidoCriteria cc = new ContidoCriteria();
-		cc.setTipos(new Character [] {'C'});
-		
-		
+		cc.setTipos(new Character [] {'C', 'A', 'P'});
+		cc.setNomeArtista("Muse");
+
 		try {
 
 			List<Contido> results = null;
 			int startIndex = 1; 
 			int total = 0;
-			
+
 			do {
 				results = contidoService.findByCriteria(cc, startIndex, pageSize);
 				if (results.size()>0) {
@@ -63,24 +66,24 @@ public class ContidoServiceTest {
 					}
 					startIndex = startIndex + pageSize;
 				}
-				
+
 			} while (results.size()==pageSize);
-			
+
 			logger.info("Found "+total+" results.");
-						
+
 		} catch (Throwable t) {
 			logger.error(t.getMessage(),t);
 		}
 		logger.info("Test findByCriteria finished.\n");
 	}
-	
+
 	protected void testVota() {
 		logger.info("Testing vota ...");	
 
 		// Test data:
-		Long idUsuario = 9L;
+		Long idUsuario = 2L;
 		Long idContido = 1L;
-		Integer nota = 9; 
+		Integer nota = 8; 
 		try {
 
 			contidoService.vota(idUsuario, idContido, nota);
@@ -90,30 +93,30 @@ public class ContidoServiceTest {
 		}
 		logger.info("Test vota finished.\n");		
 	}
-	
+
 	protected void testCreate() {
 		logger.info("Testing create ...");	
-		
+
 		Playlist p = new Playlist();
 		p.setCodArtista(1L);
-		p.setCodEstilo(3L);
-		p.setCodUsuario(9L);
+		p.setCodEstilo(4L);
+		p.setCodUsuario(2L);
 		p.setNome("Playlist Pop");
 		try {
-		contidoService.create(p);
+			contidoService.create(p);
 		}
 		catch (Throwable t) {
 			logger.error(t.getMessage(), t);
 		}
 		logger.info("Test create finished. \n ");
-		
+
 	}
-	
-	
-	
+
+
+
 
 	public static void main(String[] args) {
-		
+
 		ContidoServiceTest test = new ContidoServiceTest();
 		test.testFindById();
 		test.testFindByCriteria();
