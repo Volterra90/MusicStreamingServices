@@ -34,7 +34,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			String queryString = 
 					"SELECT u.COD_USUARIO, u.FECHA_SUBSCRICION, u.XENERO, u.FECHA_NACEMENTO, u.E_MAIL, u.CONTRASINAL, u.NOME, u.APELIDOS, u.NICK " 
 							+ "FROM Usuario u  " +
-							"WHERE u.NICK = ? OR u.EMAIL = ? ";
+							"WHERE u.NICK = ? OR u.E_MAIL = ? ";
 			
 			preparedStatement = connection.prepareStatement(queryString,
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);

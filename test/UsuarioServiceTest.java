@@ -46,10 +46,10 @@ public class UsuarioServiceTest {
 		u.setApelidos("Taboada Varela");
 		String plainPassword = "CrihtoGuapo92";
 		u.setContrasinal(PasswordEncryptionUtil.encryptPassword(plainPassword));
-		u.setEmail("topomusero@gmail.com");
+		u.setEmail("topo_musero@hotmail.com");
 		u.setFechaNacemento(new Date());
 		u.setFechaSubscricion(new Date());
-		u.setNick("Volterra");
+		u.setNick("Volterra_90");
 		u.setNome("Alberto");
 		u.setXenero('H');
 		
@@ -67,8 +67,8 @@ public class UsuarioServiceTest {
 
 	public static void main(String args[]) {
 		UsuarioServiceTest test = new UsuarioServiceTest();
-		/*test.testCreate();*/
-		test.testFindById();
+		test.testCreate();
+		/*test.testFindById();*/
 	}
 
 }
