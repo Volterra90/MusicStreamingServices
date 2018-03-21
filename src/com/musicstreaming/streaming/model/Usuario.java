@@ -15,10 +15,7 @@ public class Usuario{
 	private String apelidos = null;
 	private String nick = null;
 	
-	private Direccion direccion = null;
-	
 	public Usuario() {
-		direccion = new Direccion();
 	}
 	
 	//Getters & Setters
@@ -69,14 +66,6 @@ public class Usuario{
 	}
 	public void setApelidos(String apelidos) {
 		this.apelidos = apelidos;
-	}
-
-	public Direccion getDireccion() {
-		return direccion;
-	}
-
-	public void setDireccion(Direccion direccion) {
-		this.direccion = direccion;
 	}
 
 	public String getNick() {

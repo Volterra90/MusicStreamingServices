@@ -3,7 +3,6 @@ package com.musicstreaming.streaming.service.impl;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,6 +16,7 @@ import com.musicstreaming.streaming.exceptions.MailException;
 import com.musicstreaming.streaming.model.Usuario;
 import com.musicstreaming.streaming.service.MailService;
 import com.musicstreaming.streaming.service.UsuarioService;
+import com.musicstreaming.streaming.util.ToStringUtil;
 
 public class UsuarioServiceImpl implements UsuarioService{
 
@@ -79,7 +79,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			return result;
 
 		} catch (SQLException e) {
-			logger.fatal("Usuario: " + ToStringBuilder.reflectionToString(u));
+			logger.fatal("Usuario: " + ToStringUtil.toString(u));
 			throw new DataException(e);   
 		} 
 		finally {
