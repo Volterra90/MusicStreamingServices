@@ -109,9 +109,8 @@ public class ContidoDAOImpl implements ContidoDAO {
 					"SELECT c.COD_CONTIDO FROM Contido c ");
 
 			if (!StringUtils.isEmpty(cc.getNomeArtista())) {
-				queryString.append("INNER JOIN ARTISTA a ON c.COD_ARTISTA = a.COD_ARTISTA AND a.NOME_ARTISTA LIKE ? ");
+				queryString.append("INNER JOIN ARTISTA a ON c.COD_ARTISTA = a.COD_ARTISTA AND a.ARTISTA LIKE ? ");
 			}
-			
 			
 			
 			boolean first = true;
@@ -134,6 +133,11 @@ public class ContidoDAOImpl implements ContidoDAO {
 				}		
 			}
 			
+			if (cc.getNome()!=null){
+				queryString.append(" AND UPPER(c.NOME) LIKE ?");
+			}
+			
+			
 			if (logger.isDebugEnabled()) {
 				logger.debug(queryString);
 			}
@@ -142,8 +146,12 @@ public class ContidoDAOImpl implements ContidoDAO {
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);		
 			
 			i = 1;
-			if (cc.getNomeArtista()!=null) {
-				preparedStatement.setString(i++, cc.getNomeArtista());
+			if (!StringUtils.isEmpty(cc.getNomeArtista())) {
+				preparedStatement.setString(i++, "%"+cc.getNomeArtista()+"%");
+			}
+			
+			if (cc.getNome()!=null){
+				preparedStatement.setString(i++, "%"+cc.getNome()+"%");
 			}
 			
 			resultSet = preparedStatement.executeQuery();
@@ -156,6 +164,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 				do {
 					c = findById(connection,resultSet.getLong(1));
 					results.add(c);
+					currentCount++;
 				} while ((currentCount < count) && resultSet.next()) ;
 			}
 
@@ -192,8 +201,6 @@ public class ContidoDAOImpl implements ContidoDAO {
 		c.setCodContido(codContido);
 		c.setCodEstilo(codEstilo);
 		c.setNome(nome);		
-		
-		logger.debug("codArtista: "+c.getCodArtista());
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
