@@ -76,6 +76,27 @@ public class ContidoServiceTest {
 		}
 		logger.info("Test findByCriteria finished.\n");
 	}
+	
+	protected void testFindTopN(){
+		logger.info("Testing findTopN ...");
+
+		Character tipo = 'C';
+		int n = 2;
+		int total = 0;
+		try{
+			List<Contido> results = null;
+			results = contidoService.findTopN(n, tipo);			
+			for (Contido c: results) {
+				total++;
+				logger.info("Result "+total+": "+ToStringUtil.toString(c));
+			}
+			logger.info("Found" + total + " results.");
+		}
+		catch (Throwable t){
+			logger.error(t.getMessage(), t);
+	}
+		logger.info("Test findTopN finished. \n");
+}
 
 	protected void testVota() {
 		logger.info("Testing vota ...");	
@@ -118,10 +139,11 @@ public class ContidoServiceTest {
 	public static void main(String[] args) {
 
 		ContidoServiceTest test = new ContidoServiceTest();
-		test.testFindById();
-		test.testFindByCriteria();
-		test.testVota();
-		test.testCreate();
+		/*test.testFindById();
+		test.testFindByCriteria();*/
+		test.testFindTopN();
+		/*test.testVota();
+		test.testCreate();*/
 	}
 
 }
