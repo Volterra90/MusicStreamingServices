@@ -14,10 +14,15 @@ public interface ContidoService {
 	public List<Contido> findByCriteria (ContidoCriteria cc, int startindex, int count)
 			throws DataException;
 	
+	public List<Contido> findTopN (int n, char tipo)
+			throws DataException;
+	
 	public void vota (Long idUsuario, Long idContido, Integer nota) 
 			throws DataException;
 	
 	public Contido create (Contido c)
 		throws DataException; 
+	
+	
 
 }

@@ -16,11 +16,13 @@ public interface ContidoDAO {
 	public List<Contido> findByCriteria (Connection connection, int startIndex, int count, ContidoCriteria cc)
 		throws DataException; 
 	
+	public List<Contido> findTopN (int n, char tipo, Connection connection)
+			throws DataException;
+	
 	public void vota(Connection connection, Long idUsuario, Long idContido, Integer nota) 
 		throws DataException;
 	
 	public Contido create(Connection connection, Contido c)
 			throws InstanceNotFoundException, DataException;
-	
 	
 }

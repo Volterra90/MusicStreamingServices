@@ -79,6 +79,27 @@ public class ContidoServiceImpl implements ContidoService {
 	}
 	
 	@Override
+	public List<Contido> findTopN (int n, char tipo)
+			throws DataException {
+		
+		Connection connection = null;
+
+		try {
+
+			connection = ConnectionManager.getConnection();
+			connection.setAutoCommit(true);
+
+			return contidoDao.findTopN(n, tipo, connection);
+
+		} catch (SQLException e){
+			logger.error("top"+n+"tipo: "+tipo, e);
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeConnection(connection);
+		}
+	}
+	
+	@Override
 	public void vota (Long idUsuario, Long idContido, Integer nota) 
 			throws DataException{
 		

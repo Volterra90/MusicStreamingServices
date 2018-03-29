@@ -181,6 +181,54 @@ public class ContidoDAOImpl implements ContidoDAO {
 
 
 	}
+	
+	public List<Contido> findTopN (int n, char tipo, Connection connection)
+			throws DataException{
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder queryString = null;
+
+		try {
+
+			queryString = new StringBuilder(
+					" SELECT c.COD_CONTIDO"
+							+ " FROM USUARIO_VOTA_CONTIDO uc"
+							+" INNER JOIN CONTIDO c"
+							+ " ON c.COD_CONTIDO = uc.COD_CONTIDO"
+							+ " GROUP BY uc.COD_CONTIDO"
+							+ " ORDER BY AVG(uc.nota) DESC"
+							+ " LIMIT ? ");
+
+			if (logger.isDebugEnabled()){
+				logger.debug(queryString);
+			}
+
+			preparedStatement = connection.prepareStatement(queryString.toString(),
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);		
+
+			int i = 1;
+			preparedStatement.setInt(i++, n);
+
+			resultSet = preparedStatement.executeQuery();
+
+			List<Contido> results = new ArrayList<Contido>();                        
+			Contido c = null;
+
+			while (resultSet.next()){
+				c = findById(connection,resultSet.getLong(1));
+				results.add(c);
+			}
+
+			return results;
+
+		} catch (SQLException e) {
+			logger.fatal("top"+n+",tipo:"+tipo, e);
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		}
+	}
 
 	private void addClause(StringBuilder queryString, boolean first, String clause) {
 		queryString.append(first?" WHERE ": " OR ").append(clause);
