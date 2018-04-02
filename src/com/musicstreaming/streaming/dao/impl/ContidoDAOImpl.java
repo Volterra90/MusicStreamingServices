@@ -194,8 +194,8 @@ public class ContidoDAOImpl implements ContidoDAO {
 					" SELECT c.COD_CONTIDO"
 							+ " FROM USUARIO_VOTA_CONTIDO uc"
 							+" INNER JOIN CONTIDO c"
-							+ " ON c.COD_CONTIDO = uc.COD_CONTIDO"
-							+ " GROUP BY uc.COD_CONTIDO"
+							+ " ON c.COD_CONTIDO = uc.COD_CONTIDO AND c.TIPO = '"+tipo
+							+ "' GROUP BY uc.COD_CONTIDO"
 							+ " ORDER BY AVG(uc.nota) DESC"
 							+ " LIMIT ? ");
 
