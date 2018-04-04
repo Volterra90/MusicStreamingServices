@@ -13,8 +13,9 @@ import com.musicstreaming.streaming.dao.util.ConnectionManager;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.model.Cancion;
+import com.musicstreaming.streaming.service.CancionService;
 
-public class CancionServiceImpl {
+public class CancionServiceImpl implements CancionService {
 
 	private static Logger logger = LogManager.getLogger(CancionServiceImpl.class.getName());
 	private CancionDAO cancionDao = null;

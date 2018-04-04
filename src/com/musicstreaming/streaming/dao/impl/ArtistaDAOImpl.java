@@ -30,10 +30,10 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 
 		try {          
 			String queryString = 
-					"SELECT c.COD_CONTIDO, c.NOME, c.TIPO, c.COD_AUTOR, c.COD_ESTILO, c.COD_ARTISTA, ca.DURACION " 
-							+ "FROM CONTIDO c"
+					"SELECT c.COD_CONTIDO, c.NOME, c.TIPO, c.COD_ESTILO, c.COD_ARTISTA, ca.DURACION " 
+							+ "FROM CONTIDO c "
 							+ "INNER JOIN cancion ca "
-							+ "ON c.COD_CANCION = c.COD_CONTIDO "
+							+ "ON ca.COD_CANCION = c.COD_CONTIDO "
 							+ "WHERE c.COD_CONTIDO = ? ";
 
 			preparedStatement = connection.prepareStatement(queryString,

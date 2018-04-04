@@ -11,4 +11,5 @@ public interface AlbumDAO {
 	public Album findById(Connection connection,Long id) 
 			throws InstanceNotFoundException, DataException;
 	
+	
 }

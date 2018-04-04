@@ -109,7 +109,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 					"SELECT c.COD_CONTIDO FROM Contido c ");
 
 			if (!StringUtils.isEmpty(cc.getNomeArtista())) {
-				queryString.append("INNER JOIN ARTISTA a ON c.COD_ARTISTA = a.COD_ARTISTA AND a.ARTISTA LIKE ? ");
+				queryString.append("INNER JOIN ARTISTA a ON c.COD_ARTISTA = a.COD_ARTISTA AND a.NOME_ARTISTA LIKE ? ");
 			}
 			
 			
@@ -133,8 +133,12 @@ public class ContidoDAOImpl implements ContidoDAO {
 				}		
 			}
 			
-			if (cc.getNome()!=null){
-				queryString.append(" AND UPPER(c.NOME) LIKE ?");
+			if (cc.getNome()!=null) {
+				if (!first) {
+					queryString.append(" AND UPPER(c.NOME) LIKE ?");
+				}else {
+					queryString.append(" WHERE UPPER(c.NOME) LIKE ?");
+				}
 			}
 			
 			
