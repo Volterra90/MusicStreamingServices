@@ -30,11 +30,9 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 
 		try {          
 			String queryString = 
-					"SELECT c.COD_CONTIDO, c.NOME, c.TIPO, c.COD_ESTILO, c.COD_ARTISTA, ca.DURACION " 
-							+ "FROM CONTIDO c "
-							+ "INNER JOIN cancion ca "
-							+ "ON ca.COD_CANCION = c.COD_CONTIDO "
-							+ "WHERE c.COD_CONTIDO = ? ";
+					"SELECT a.COD_ARTISTA, a.ANO_FORMACION, a.NOME_ARTISTA " 
+							+ "FROM ARTISTA a "
+							+ "WHERE COD_ARTISTA = ?";
 
 			preparedStatement = connection.prepareStatement(queryString,
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -49,7 +47,7 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 			if (resultSet.next()) {
 				a = loadNext(resultSet);				
 			} else {
-				throw new InstanceNotFoundException("Canción with id " + id + 
+				throw new InstanceNotFoundException("Artista with id " + id + 
 						"not found", Cancion.class.getName());
 			}
 
@@ -72,7 +70,7 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 		// Recupera los atributos asumiendo un orden comun
 		int i = 1;
 		Long codArtista = resultSet.getLong(i++);	                
-		Date anoFormacion = resultSet.getDate(i++);	                
+		Integer anoFormacion = resultSet.getInt(i++);	                
 		String nomeArtista = resultSet.getString(i++);
 
 		// Rellena el objeto

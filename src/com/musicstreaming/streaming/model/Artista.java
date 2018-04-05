@@ -6,17 +6,17 @@ public class Artista{
 
 	//Atributos
 	private Long codArtista = null;
-	private Date anoFormacion = null;
+	private Integer anoFormacion = null;
 	private String nomeArtista = null;
 	
 	
 	public Artista() {}
 	//Getters & Setters
 	
-	public Date getAnoFormacion() {
+	public Integer getAnoFormacion() {
 		return anoFormacion;
 	}
-	public void setAnoFormacion(Date anoFormacion) {
+	public void setAnoFormacion(Integer anoFormacion) {
 		this.anoFormacion = anoFormacion;
 	}
 

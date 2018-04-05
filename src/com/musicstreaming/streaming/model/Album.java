@@ -7,6 +7,7 @@ public class Album extends GrupoCancions {
 	//Atributos
 	private Date fechaPublicacion = null;
 	private String nomeDiscografica = null;
+
 	
 	public Album() {
 		setTipo(TipoContido.ALBUM);
@@ -25,6 +26,5 @@ public class Album extends GrupoCancions {
 	public void setNomeDiscografica(String nomeDiscografica) {
 		this.nomeDiscografica = nomeDiscografica;
 	}
-	
 	
 }
