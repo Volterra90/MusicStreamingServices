@@ -58,7 +58,7 @@ public class ContidoServiceImpl implements ContidoService {
 	}
 	
 	@Override
-	public List<Contido> findByCriteria (ContidoCriteria cc, int startIndex, int count)
+	public List<? extends Contido> findByCriteria (ContidoCriteria cc, int startIndex, int count)
 			throws DataException {
 		
 		Connection connection = null;
@@ -79,7 +79,7 @@ public class ContidoServiceImpl implements ContidoService {
 	}
 	
 	@Override
-	public List<Contido> findTopN (int n, char tipo)
+	public List<? extends Contido> findTopN (int n, char tipo)
 			throws DataException {
 		
 		Connection connection = null;

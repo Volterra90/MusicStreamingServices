@@ -11,10 +11,10 @@ public interface ContidoService {
 	public Contido findById(Long id)
 			throws InstanceNotFoundException, DataException;
 		
-	public List<Contido> findByCriteria (ContidoCriteria cc, int startindex, int count)
+	public List<? extends Contido> findByCriteria (ContidoCriteria cc, int startindex, int count)
 			throws DataException;
 	
-	public List<Contido> findTopN (int n, char tipo)
+	public List<? extends Contido> findTopN (int n, char tipo)
 			throws DataException;
 	
 	public void vota (Long idUsuario, Long idContido, Integer nota) 

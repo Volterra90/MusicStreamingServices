@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.musicstreaming.streaming.dao.AlbumDAO;
+import com.musicstreaming.streaming.dao.CancionDAO;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
@@ -18,8 +19,11 @@ import com.musicstreaming.streaming.model.Album;
 public class AlbumDAOImpl extends ContidoDAOImpl implements AlbumDAO {
 	
 	private static Logger logger = LogManager.getLogger(AlbumDAOImpl.class.getName());
+	private CancionDAO cancionDAO = null;
+	
 	public AlbumDAOImpl() {
 		super("");
+		cancionDAO = new CancionDAOImpl();
 	}
 	
 	public Album findById(Connection connection, Long id) 
@@ -80,9 +84,11 @@ public class AlbumDAOImpl extends ContidoDAOImpl implements AlbumDAO {
 		// Y carga los suyos propios
 		Date fecha = rs.getDate(5);	
 		String discografica = rs.getString(6);
-		
 		a.setFechaPublicacion(fecha);
 		a.setNomeDiscografica(discografica);
+		
+		a.setCancions(cancionDAO.findByGrupo(connection, 1, count, a.getCodContido()));
+		
 				
 		return a;
 	}

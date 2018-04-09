@@ -1,6 +1,6 @@
 package com.musicstreaming.streaming.model;
 
-public class Contido {
+public abstract class Contido {
 	
 	//Atributos
 	private Long codContido = null;
