@@ -57,7 +57,7 @@ public class ContidoServiceTest {
 			int total = 0;
 
 			do {
-				results = contidoService.findByCriteria(cc, startIndex, pageSize);
+				results = (List<Contido>) contidoService.findByCriteria(cc, startIndex, pageSize);
 				if (results.size()>0) {
 					logger.info("Page ["+startIndex+" - "+(startIndex+results.size()-1)+"] : ");				
 					for (Contido c: results) {
@@ -85,7 +85,7 @@ public class ContidoServiceTest {
 		int total = 0;
 		try{
 			List<Contido> results = null;
-			results = contidoService.findTopN(n, tipo);			
+			results = (List<Contido>) contidoService.findTopN(n, tipo);			
 			for (Contido c: results) {
 				total++;
 				logger.info("Result "+total+": "+ToStringUtil.toString(c));
