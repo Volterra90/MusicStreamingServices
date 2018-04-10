@@ -87,7 +87,7 @@ public class AlbumDAOImpl extends ContidoDAOImpl implements AlbumDAO {
 		a.setFechaPublicacion(fecha);
 		a.setNomeDiscografica(discografica);
 		
-		a.setCancions(cancionDAO.findByGrupo(connection, 1, count, a.getCodContido()));
+		a.setCancions(cancionDAO.findByGrupo(connection, a.getCodContido()));
 		
 				
 		return a;

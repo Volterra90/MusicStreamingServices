@@ -22,30 +22,17 @@ public class CancionServiceTest {
 	protected void testFindByGrupo() {
 		logger.info("Testing findbyGrupo ...");
 		// Test data:		
-		int pageSize = 2;
 		Long id = 1L;
-
+		int total = 0;
+		
 		try {
-
 			List<Cancion> results = null;
-			int startIndex = 1; 
-			int total = 0;
-
-			do {
-				results = cancionService.findByGrupo(startIndex, pageSize, id);
-				if (results.size()>0) {
-					logger.info("Page ["+startIndex+" - "+(startIndex+results.size()-1)+"] : ");				
-					for (Contido c: results) {
-						total++;
-						logger.info("Result "+total+": "+ToStringUtil.toString(c));
-					}
-					startIndex = startIndex + pageSize;
-				}
-
-			} while (results.size()==pageSize);
-
+			results = cancionService.findByGrupo(id);				
+			for (Contido c: results) {
+				total++;
+				logger.info("Result "+total+": "+ToStringUtil.toString(c));
+			}
 			logger.info("Found "+total+" results.");
-
 		} catch (Throwable t) {
 			logger.error(t.getMessage(),t);
 		}

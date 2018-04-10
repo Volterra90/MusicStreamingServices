@@ -24,7 +24,7 @@ public class CancionServiceImpl implements CancionService {
 		cancionDao = new CancionDAOImpl();
 	}
 
-	public List<Cancion> findByGrupo (int startIndex, int count, Long id)
+	public List<Cancion> findByGrupo (Long id)
 			throws DataException{
 		Connection connection = null;
 
@@ -33,7 +33,7 @@ public class CancionServiceImpl implements CancionService {
 			connection = ConnectionManager.getConnection();
 			connection.setAutoCommit(true);
 
-			return cancionDao.findByGrupo(connection, startIndex, count, id);
+			return cancionDao.findByGrupo(connection, id);
 
 		} catch (SQLException e){
 			logger.error("idGrupo :" + id, e);

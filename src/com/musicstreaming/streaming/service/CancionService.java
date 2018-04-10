@@ -7,7 +7,7 @@ import com.musicstreaming.streaming.model.Cancion;
 
 public interface CancionService {
 	
-	public List<Cancion> findByGrupo (int startIndex, int count, Long id)
+	public List<Cancion> findByGrupo (Long id)
 			throws DataException;
 
 }

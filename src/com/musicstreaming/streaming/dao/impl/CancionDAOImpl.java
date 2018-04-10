@@ -67,7 +67,7 @@ public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 	}
 	
 	@Override
-	public List<Cancion> findByGrupo(Connection connection, int startIndex, int count, Long id)
+	public List<Cancion> findByGrupo(Connection connection, Long id)
 			throws DataException{
 		
 		PreparedStatement preparedStatement = null;
@@ -86,14 +86,11 @@ public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 			
 			List<Cancion> results = new ArrayList<Cancion>();                        
 			Cancion c = null;
-			int currentCount = 0;
 
-			if ((startIndex >=1) && resultSet.absolute(startIndex)) {
-				do {
+				while (resultSet.next()) {
 					c = findById(connection,resultSet.getLong(1));
 					results.add(c);
-				} while ((currentCount < count) && resultSet.next()) ;
-			}
+				} ;
 
 			return results;
 
