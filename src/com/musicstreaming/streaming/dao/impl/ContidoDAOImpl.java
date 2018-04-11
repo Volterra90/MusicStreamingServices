@@ -141,6 +141,10 @@ public class ContidoDAOImpl implements ContidoDAO {
 				}
 			}
 			
+			if(cc.getCodArtista()!=null) {
+				queryString.append(" AND c.COD_ARTISTA = ?");
+			}
+			
 			
 			if (logger.isDebugEnabled()) {
 				logger.debug(queryString);
@@ -156,6 +160,10 @@ public class ContidoDAOImpl implements ContidoDAO {
 			
 			if (cc.getNome()!=null){
 				preparedStatement.setString(i++, "%"+cc.getNome()+"%");
+			}
+			
+			if (cc.getCodArtista()!=null) {
+				preparedStatement.setLong(i++, cc.getCodArtista());
 			}
 			
 			resultSet = preparedStatement.executeQuery();
