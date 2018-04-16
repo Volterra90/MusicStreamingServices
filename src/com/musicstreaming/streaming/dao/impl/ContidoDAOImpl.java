@@ -327,13 +327,15 @@ public class ContidoDAOImpl implements ContidoDAO {
 			} else {
 
 				queryString = 
-						"UPDATE USUARIO_VOTA_CONTIDO SET COD_USUARIO = ?, COD_CONTIDO = ?, NOTA = ?";
+						"UPDATE USUARIO_VOTA_CONTIDO SET NOTA = ? WHERE COD_USUARIO = ? AND COD_CONTIDO = ?";
 				preparedStatement = connection.prepareStatement(queryString, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-				int i = 1;                
+				
+				int i = 1; 
+				preparedStatement.setInt(i++, nota);
 				preparedStatement.setLong(i++, idUsuario);
 				preparedStatement.setLong(i++, idContido);
-				preparedStatement.setInt(i++, nota);
+				
 
 				int updatedRows = preparedStatement.executeUpdate();
 				if (updatedRows > 1) {
@@ -341,7 +343,11 @@ public class ContidoDAOImpl implements ContidoDAO {
 							idUsuario+",cod_contido = "+idContido+"' in table 'Shippers'");
 				}                          
 			}
+			
+			
+			
 		} catch (SQLException e) {
+			logger.debug(queryString);
 			logger.fatal("idUsuario: "+idUsuario+", idContido: "+idContido + ", nota: "+nota, e);
 			throw new DataException(e);
 		} finally {            

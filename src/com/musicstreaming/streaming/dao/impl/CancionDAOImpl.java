@@ -116,7 +116,7 @@ public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 		super.loadNext(connection, rs, c);
 		
 		// Y carga los suyos propios
-		Long duracion = rs.getLong(5);	
+		Integer duracion = rs.getInt(5);	
 		c.setDuracion(duracion);
 				
 		return c;
