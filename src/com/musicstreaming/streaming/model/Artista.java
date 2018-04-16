@@ -1,24 +1,14 @@
 package com.musicstreaming.streaming.model;
 
-import java.util.Date;
-
 public class Artista{
 
 	//Atributos
 	private Long codArtista = null;
-	private Integer anoFormacion = null;
 	private String nomeArtista = null;
 	
 	
 	public Artista() {}
-	//Getters & Setters
-	
-	public Integer getAnoFormacion() {
-		return anoFormacion;
-	}
-	public void setAnoFormacion(Integer anoFormacion) {
-		this.anoFormacion = anoFormacion;
-	}
+	//Getters & Setters	
 
 	public Long getCodArtista() {
 		return codArtista;

@@ -1,11 +1,9 @@
 package com.musicstreaming.streaming.model;
 
-import java.util.Date;
-
 public class Album extends GrupoCancions {
 
 	//Atributos
-	private Date fechaPublicacion = null;
+	private Integer fechaPublicacion = null;
 	private String nomeDiscografica = null;
 
 	
@@ -14,10 +12,10 @@ public class Album extends GrupoCancions {
 	}
 	
 	//Getters & Setters
-	public Date getFechaPublicacion() {
+	public Integer getFechaPublicacion() {
 		return fechaPublicacion;
 	}
-	public void setFechaPublicacion(Date fechaPublicacion) {
+	public void setFechaPublicacion(Integer fechaPublicacion) {
 		this.fechaPublicacion = fechaPublicacion;
 	}
 	public String getNomeDiscografica() {

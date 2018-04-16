@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,7 +29,7 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 
 		try {          
 			String queryString = 
-					"SELECT a.COD_ARTISTA, a.ANO_FORMACION, a.NOME_ARTISTA " 
+					"SELECT a.COD_ARTISTA, a.ARTISTA " 
 							+ "FROM ARTISTA a "
 							+ "WHERE COD_ARTISTA = ?";
 
@@ -69,13 +68,11 @@ public class ArtistaDAOImpl implements ArtistaDAO {
 
 		// Recupera los atributos asumiendo un orden comun
 		int i = 1;
-		Long codArtista = resultSet.getLong(i++);	                
-		Integer anoFormacion = resultSet.getInt(i++);	                
+		Long codArtista = resultSet.getLong(i++);	                                
 		String nomeArtista = resultSet.getString(i++);
 
 		// Rellena el objeto
 		Artista a = new Artista();
-		a.setAnoFormacion(anoFormacion);
 		a.setCodArtista(codArtista);
 		a.setNomeArtista(nomeArtista);
 		return a;

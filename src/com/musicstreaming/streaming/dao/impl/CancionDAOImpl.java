@@ -75,7 +75,7 @@ public class CancionDAOImpl extends ContidoDAOImpl implements CancionDAO {
 		
 		
 		try {
-			String queryString = "SELECT COD_CANCION FROM GRUPO_CONTEN_CANCION WHERE COD_GRUPO = ? ";
+			String queryString = "SELECT COD_CANCION FROM GRUPO_CONTEN_CANCION WHERE COD_GRUPO = ? ORDER BY ORDE ASC ";
 			preparedStatement = connection.prepareStatement(queryString,
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 

@@ -27,7 +27,7 @@ import com.musicstreaming.streaming.service.ContidoCriteria;
 public class ContidoDAOImpl implements ContidoDAO {
 
 	private static Logger logger = LogManager.getLogger(ContidoDAOImpl.class.getName());
-	
+
 	private CancionDAO cancionDAO = null;
 	private AlbumDAO albumDAO = null; 
 	private PlaylistDAO playlistDAO = null;
@@ -42,7 +42,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 
 	protected ContidoDAOImpl(String s) {		
 	}
-	
+
 	@Override 
 	public Contido findById(Connection connection, Long id) 
 			throws InstanceNotFoundException, DataException {
@@ -64,12 +64,12 @@ public class ContidoDAOImpl implements ContidoDAO {
 			preparedStatement.setLong(i++, id);
 
 			resultSet = preparedStatement.executeQuery();
-			
-			
+
+
 			if (resultSet.next()) {	
 				tipo = resultSet.getString(1).charAt(0);
 			}
-			
+
 			Contido c = null;
 
 			switch (tipo) {
@@ -77,9 +77,9 @@ public class ContidoDAOImpl implements ContidoDAO {
 				c = cancionDAO.findById(connection, id);
 				break;
 			case 'A': c = albumDAO.findById(connection, id);
-				break;
+			break;
 			case 'P': c = playlistDAO.findById(connection, id);
-				break;
+			break;
 			default: throw new IllegalArgumentException();
 			}
 
@@ -109,28 +109,30 @@ public class ContidoDAOImpl implements ContidoDAO {
 					"SELECT c.COD_CONTIDO FROM Contido c ");
 
 			if (!StringUtils.isEmpty(cc.getNomeArtista())) {
-				queryString.append("INNER JOIN ARTISTA a ON c.COD_ARTISTA = a.COD_ARTISTA AND a.NOME_ARTISTA LIKE ? ");
+				queryString.append("INNER JOIN ARTISTA a ON c.COD_ARTISTA = a.COD_ARTISTA AND a.ARTISTA LIKE ? ");
 			}
-			
-			
+
+
 			boolean first = true;
 
 			int i;
-			for (i=0; i<cc.getTipos().length; i++){
-				if (cc.getTipos()[i]=='A') {
-					addClause(queryString, first, " c.TIPO = 'A' ");
-					first = false;
-				}
+			if (cc.getTipos().length!=3) {
+				for (i=0; i<cc.getTipos().length; i++){
+					if (cc.getTipos()[i]=='A') {
+						addClause(queryString, first, " c.TIPO = 'A' ");
+						first = false;
+					}
 
-				else if (cc.getTipos()[i]=='C') {
-					addClause(queryString, first, " c.TIPO = 'C' ");
-					first = false;
-				}
+					else if (cc.getTipos()[i]=='C') {
+						addClause(queryString, first, " c.TIPO = 'C' ");
+						first = false;
+					}
 
-				else if (cc.getTipos()[i]=='P') {
-					addClause(queryString, first, " c.TIPO = 'P' ");
-					first = false;
-				}		
+					else if (cc.getTipos()[i]=='P') {
+						addClause(queryString, first, " c.TIPO = 'P' ");
+						first = false;
+					}		
+				}
 			}
 			
 			if (cc.getNome()!=null) {

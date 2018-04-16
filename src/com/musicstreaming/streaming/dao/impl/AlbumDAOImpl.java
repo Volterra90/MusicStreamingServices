@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -82,7 +81,7 @@ public class AlbumDAOImpl extends ContidoDAOImpl implements AlbumDAO {
 		super.loadNext(connection, rs, a);
 		
 		// Y carga los suyos propios
-		Date fecha = rs.getDate(5);	
+		Integer fecha = rs.getInt(5);	
 		String discografica = rs.getString(6);
 		a.setFechaPublicacion(fecha);
 		a.setNomeDiscografica(discografica);
