@@ -397,9 +397,6 @@ public class ContidoDAOImpl implements ContidoDAO {
 			
 			Character tipo = c.getTipo();
 			
-			// if (c instanceof Cancion) {
-			//				c = TipoContido.CANCION;
-			//			} else if (c instanceof ) +
 				
 				
 				

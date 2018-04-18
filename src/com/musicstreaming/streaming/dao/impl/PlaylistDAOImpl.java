@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.logging.log4j.LogManager;
@@ -70,6 +72,46 @@ public class PlaylistDAOImpl extends ContidoDAOImpl implements PlaylistDAO {
 		}
 
 	}
+	
+	@Override
+	public List<Playlist> findByUsuario(Connection connection, Long idUsuario)
+			throws DataException{
+		
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		
+		try {
+			String queryString = "SELECT COD_PLAYLIST FROM PLAYLIST WHERE COD_USUARIO = ? ";
+			preparedStatement = connection.prepareStatement(queryString,
+					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+			int i = 1;                
+			preparedStatement.setLong(i++, idUsuario);
+
+			resultSet = preparedStatement.executeQuery();
+			
+			List<Playlist> results = new ArrayList<Playlist>();                        
+			Playlist p = null;
+
+				while (resultSet.next()) {
+					p = findById(connection,resultSet.getLong(1));
+					results.add(p);
+				} ;
+
+			return results;
+
+		} catch (SQLException e) {
+			logger.fatal("idUsuario : "+ idUsuario, e);
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeResultSet(resultSet);
+			JDBCUtils.closeStatement(preparedStatement);
+		}
+
+		
+	}
+	
 
 	protected Playlist loadNext(Connection connection, ResultSet rs) 
 			throws SQLException, DataException{

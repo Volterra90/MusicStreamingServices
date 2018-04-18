@@ -26,5 +26,4 @@ public class ContidoCriteria extends Contido {
 		this.nomeArtista = nomeArtista;
 	}
 	
-	
 }
