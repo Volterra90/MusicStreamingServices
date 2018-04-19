@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import com.musicstreaming.streaming.dao.UsuarioDAO;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
+import com.musicstreaming.streaming.exceptions.DuplicateInstanceException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
 import com.musicstreaming.streaming.model.Direccion;
 import com.musicstreaming.streaming.model.Usuario;
@@ -98,7 +99,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	
 	@Override
 	public Usuario create(Connection connection, Usuario u) 
-     		throws DataException{
+     		throws DataException, DuplicateInstanceException{
 		
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;

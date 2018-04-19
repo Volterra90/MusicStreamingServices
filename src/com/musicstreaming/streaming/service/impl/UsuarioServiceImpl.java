@@ -11,6 +11,7 @@ import com.musicstreaming.streaming.dao.impl.UsuarioDAOImpl;
 import com.musicstreaming.streaming.dao.util.ConnectionManager;
 import com.musicstreaming.streaming.dao.util.JDBCUtils;
 import com.musicstreaming.streaming.exceptions.DataException;
+import com.musicstreaming.streaming.exceptions.DuplicateInstanceException;
 import com.musicstreaming.streaming.exceptions.InstanceNotFoundException;
 import com.musicstreaming.streaming.exceptions.MailException;
 import com.musicstreaming.streaming.model.Usuario;
@@ -55,7 +56,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 
 	public Usuario create(Usuario u) 
-			throws DataException, MailException {
+			throws DataException, MailException, DuplicateInstanceException {
 
 		Connection connection = null;
 		boolean commit = false;
