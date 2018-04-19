@@ -12,6 +12,6 @@ public interface UsuarioService {
 		throws InstanceNotFoundException, DataException;
 	
 	public Usuario create(Usuario u) 
-     		throws DataException, MailException, DuplicateInstanceException;
+     		throws DuplicateInstanceException, DataException, MailException;
 
 }

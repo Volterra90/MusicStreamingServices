@@ -12,7 +12,10 @@ public interface UsuarioDAO {
 	public Usuario findUserById(Connection connection, String id) 
 			throws InstanceNotFoundException, DataException;
 	
+	public Boolean exists(Connection connection, String nick, String email) 
+			throws DataException;
+	
 	public Usuario create(Connection connection, Usuario u) 
-     		throws DataException, DuplicateInstanceException;
+     		throws DuplicateInstanceException, DataException;
 	
 }

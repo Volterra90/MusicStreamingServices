@@ -56,7 +56,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 
 	public Usuario create(Usuario u) 
-			throws DataException, MailException, DuplicateInstanceException {
+			throws DuplicateInstanceException, DataException, MailException{
 
 		Connection connection = null;
 		boolean commit = false;
