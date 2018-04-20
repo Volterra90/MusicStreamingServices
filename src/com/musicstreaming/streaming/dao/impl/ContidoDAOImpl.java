@@ -148,6 +148,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 			}
 			
 			
+			
 			if (logger.isDebugEnabled()) {
 				logger.debug(queryString);
 			}
@@ -210,7 +211,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 							+" INNER JOIN CONTIDO c"
 							+ " ON c.COD_CONTIDO = uc.COD_CONTIDO AND c.TIPO = '"+tipo
 							+ "' GROUP BY uc.COD_CONTIDO"
-							+ " ORDER BY AVG(uc.nota) DESC"
+							+ " ORDER BY AVG(uc.nota) DESC, c.NOME DESC"
 							+ " LIMIT ? ");
 
 			if (logger.isDebugEnabled()){
