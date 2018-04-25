@@ -19,10 +19,10 @@ import com.musicstreaming.streaming.service.ContidoCriteria;
 import com.musicstreaming.streaming.service.ContidoService;
 
 /**
- * Ejemplo de implementacion mock. 
+ * Implementación de ContidoService
  *
- * @author https://www.linkedin.com/in/joseantoniolopezperez
- * @version 0.2
+ * @author Alberto Taboada Varela
+ * 
  */
 public class ContidoServiceImpl implements ContidoService {
 	
@@ -135,7 +135,7 @@ public class ContidoServiceImpl implements ContidoService {
 		
 		 Connection connection = null;
 	        boolean commit = false;
-
+	        
 	        try {
 
 	          
@@ -145,9 +145,10 @@ public class ContidoServiceImpl implements ContidoService {
 	                    Connection.TRANSACTION_READ_COMMITTED);
 
 	            connection.setAutoCommit(false);
-
-	            // Execute action
+	            //Manexo da transacción no service.
+	     
 	            Contido result = contidoDao.create(connection, c);
+	            //Executamos as accións
 	            commit = true;            
 	            return result;
 	        } catch (SQLException e) {
@@ -156,6 +157,7 @@ public class ContidoServiceImpl implements ContidoService {
 	       
 	        } finally {
 	        	JDBCUtils.closeConnection(connection, commit);
+	        	//Pechamos a conexión. Se as accións se executaron con éxito, faremos commit. Se non, rollback.
 	        }		
 		
 		

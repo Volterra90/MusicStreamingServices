@@ -24,6 +24,13 @@ import com.musicstreaming.streaming.model.Contido;
 import com.musicstreaming.streaming.model.Playlist;
 import com.musicstreaming.streaming.service.ContidoCriteria;
 
+/**
+ * Implementación de ContidoDAO
+ *
+ * @author Alberto Taboada Varela
+ * 
+ */
+
 public class ContidoDAOImpl implements ContidoDAO {
 
 	private static Logger logger = LogManager.getLogger(ContidoDAOImpl.class.getName());
@@ -31,8 +38,6 @@ public class ContidoDAOImpl implements ContidoDAO {
 	private CancionDAO cancionDAO = null;
 	private AlbumDAO albumDAO = null; 
 	private PlaylistDAO playlistDAO = null;
-
-
 
 	public ContidoDAOImpl() {
 		cancionDAO = new CancionDAOImpl();
@@ -104,7 +109,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 		StringBuilder queryString = null;
 
 		try {
-
+			
 			queryString = new StringBuilder(
 					"SELECT c.COD_CONTIDO FROM Contido c ");
 
@@ -147,7 +152,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 				queryString.append(" AND c.COD_ARTISTA = ?");
 			}
 			
-			
+			//Construcción da query para consulta en BD.
 			
 			if (logger.isDebugEnabled()) {
 				logger.debug(queryString);
@@ -155,6 +160,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 
 			preparedStatement = connection.prepareStatement(queryString.toString(),
 					ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);		
+			//Abrimos o preparedStatement.
 			
 			i = 1;
 			if (!StringUtils.isEmpty(cc.getNomeArtista())) {
@@ -170,7 +176,8 @@ public class ContidoDAOImpl implements ContidoDAO {
 			}
 			
 			resultSet = preparedStatement.executeQuery();
-
+			//Executamos a query e metemos o resultado no resultSet.
+			
 			List<Contido> results = new ArrayList<Contido>();                        
 			Contido c = null;
 			int currentCount = 0;
@@ -182,7 +189,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 					currentCount++;
 				} while ((currentCount < count) && resultSet.next()) ;
 			}
-
+			//Iteración que mete os resultados do resultSet nunha lista de Contidos.
 			return results;
 
 		} catch (SQLException e) {
@@ -191,6 +198,7 @@ public class ContidoDAOImpl implements ContidoDAO {
 		} finally {
 			JDBCUtils.closeResultSet(resultSet);
 			JDBCUtils.closeStatement(preparedStatement);
+			//Pechamos o resultSet e o preparedStatement
 		}
 
 
